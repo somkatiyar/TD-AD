@@ -1,0 +1,734 @@
+<div class="container hideOverflowY">
+  <a (click)="goBack()" class=" roundback" title="Previous Page">&#8249;</a>
+
+  <div class="row" style="margin:2em 0 0 0 !important;">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+
+      <!-- <img [src]="isProfile ? selectedImage : details.profilePictureUrl ?  picUrl+details.profilePictureUrl : 'assets/images/driver.png'" (error)="errorHandler($event)" class="photo_upload" alt=""> -->
+
+      <img [src]=" image ? image : picUrl+ profilePictureUrl ?  picUrl+profilePictureUrl : 'assets/images/userPlaceholder.png'"
+        (error)="errorHandler($event)" class="photo_upload" alt="">
+      <div class="edit-profile-section">
+        <img src="assets/images/camera.png" class="camera" (click)="profile.click();">
+      </div>
+      <input type="file" class="file" name="image" #profile (change)="addProfilePicture($event,'PROFILE_PICTURE')" />
+    </div>
+
+
+    <div class="col-lg-6 col-md-6 col-sm-12 text-right">
+      <div class="checkbox_disable">
+
+
+        <label class="animaterContainer" *ngIf="!isAddPage && typeUser=='driver'">
+          <button [class]="btnClass" (click)="disableItem('disable')">{{disableBtn}}</button>
+
+        </label>
+
+        <label class="animaterContainer" *ngIf="!isAddPage && typeUser=='driver'">
+          <button class="enableBtn" id="approveBtn" (click)="disableItem('aprove')">Aprove</button>
+
+
+        </label>
+
+
+      </div>
+
+      <div class="isAddPage" *ngIf="isAddPage">
+        <b class="addDrv">{{'commonForm.addschoolconfermation' | translate }}
+
+        </b>
+
+        <label class="schoolLabel">
+          {{showSchoolName}}
+        </label>
+        <button type="button" class="addSchool" data-toggle="modal" data-target="#myModal">{{'commonForm.buttonTitle.selectschool' | translate }}</button>
+        <button type="button" *ngIf= "showSchoolName" class="removeSchool"  (click)="removeSchool()" >{{'commonForm.buttonTitle.removeschool' | translate }}</button>
+
+        <div>
+
+    
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+  <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate autocomplete="off">
+
+
+
+
+    <div class="row" style="margin:2em 0 0 0 !important;">
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <h5>{{'commonForm.pageContant.personalInfo' | translate }} </h5>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+
+          <div class="Input"> 
+            <input type="text" class="Input-text" #FNAME="ngModel"
+            (keypress)="omit_special_char($event)"
+            (keypress)=" charOnly($event)"  pattern="^[a-zA-Z ]*$"
+             [ngClass]="{ 'is-invalid': f.submitted && FNAME.invalid }"
+              placeholder="{{'commonForm.pageContant.firstname' | translate }}"
+               required name="firstName" [(ngModel)]="firstName">
+            <label for="input" class="Input-label" >{{'commonForm.pageContant.firstname' | translate }}</label>
+
+         </div>
+
+
+
+            <div class="message-space">
+
+            <span *ngIf="FNAME.touched && FNAME?.errors && FNAME?.errors.required ||f.submitted && FNAME.invalid">
+              {{'commonValidation.firstname' | translate }}
+            </span>
+          </div>
+
+
+          <div class="Input"> 
+            <input type="text" class="Input-text" #LNAME="ngModel" 
+            [ngClass]="{ 'is-invalid': f.submitted && LNAME.invalid }"
+              placeholder="{{'commonForm.pageContant.lastname' | translate }}"
+              required name="lastName" [(ngModel)]='lastName'>
+            <label for="input" class="Input-label" >{{'commonForm.pageContant.lastname' | translate }}</label>
+
+         </div>
+
+
+            <div class="message-space">
+           <span *ngIf="LNAME.touched && LNAME?.errors && LNAME?.errors.required ||f.submitted && LNAME.invalid">
+              {{'commonValidation.lastname' | translate }}
+            </span>
+          </div>
+
+          <div class="Input"> 
+            <input type="email" class="Input-text" #EMAIL="ngModel" 
+          placeholder="{{'commonForm.pageContant.email' | translate }}"
+           name="email" [(ngModel)]='email'
+            [ngClass]="{ 'is-invalid': f.submitted && EMAIL.invalid }"
+            pattern='^\w+[\w-\.]*\@\w+((-\w+)|(\w*))(\.[a-z]{2,7}){1,2}$'
+            required>
+            <label for="input" class="Input-label" >{{'commonForm.pageContant.email' | translate }}</label>
+
+         </div>
+
+      
+
+       
+
+          <div class="message-space">
+
+            <span *ngIf="EMAIL.touched && EMAIL?.errors && EMAIL?.errors.required ||f.submitted && EMAIL.invalid">
+              {{'commonValidation.email' | translate }}
+            </span>
+
+            <span *ngIf="EMAIL.touched && EMAIL?.errors && EMAIL?.errors.pattern">
+              {{'commonValidation.validemail' | translate }}
+            </span>
+
+          </div>
+
+
+          <div class="Input"> 
+            <input [type]="show ? 'text' : 'password'" 
+            class="Input-text" #PASSWORD="ngModel"
+             placeholder="{{'commonForm.pageContant.password' | translate }}"
+              name="password" [(ngModel)]='password' minlength="8" [ngClass]="{ 'is-invalid': f.submitted && PASSWORD.invalid }"
+              required>
+            <label for="input" class="Input-label" >{{'commonForm.pageContant.password' | translate }}</label>
+
+         </div>
+
+    
+          <div class="message-space">
+            <span *ngIf="PASSWORD.touched && PASSWORD?.errors && PASSWORD?.errors.required || f.submitted && PASSWORD.invalid">
+              {{'commonValidation.password' | translate }}
+            </span>
+
+            <span *ngIf="PASSWORD?.errors &&  PASSWORD?.errors.minlength">
+              {{'commonValidation.passwordlength' | translate }}
+
+            </span>
+
+          </div>
+
+          <div class="Input"> 
+              <input type="password" class="Input-text"
+              placeholder="{{'commonForm.pageContant.confirmpassword' | translate }}"
+              name="confirmPassword"
+               value="" [(ngModel)]="confirmPassword"
+                minlength="8" #CONFIRMPASSWORD="ngModel" appConfirmEqualValidator="password"
+               [ngClass]="{ 'is-invalid': f.submitted && CONFIRMPASSWORD.invalid }"
+                required validateEqual="password">
+              <label for="input" class="Input-label" >{{'commonForm.pageContant.confirmpassword' | translate }}</label>
+  
+           </div>
+
+
+       
+
+          <div class="message-space">
+
+            <span *ngIf="CONFIRMPASSWORD.touched && CONFIRMPASSWORD?.errors && CONFIRMPASSWORD?.errors.required || f.submitted && CONFIRMPASSWORD.invalid">
+              {{'commonValidation.confirmpassword' | translate }}
+            </span>
+
+            <span *ngIf="CONFIRMPASSWORD?.errors && CONFIRMPASSWORD?.errors.notEqual">
+              {{'commonValidation.confirmpasslength' | translate }}
+            </span>
+
+
+          </div>
+
+
+
+
+          <div class="Input"> 
+            <input type="text" class="Input-text"
+            placeholder="{{'commonForm.pageContant.phonenumber' | translate }}"
+             name="mobileNumber" #MOBILENO="ngModel"
+             [(ngModel)]="mobileNumber" [ngClass]="{ 'is-invalid': f.submitted && MOBILENO.invalid }" (keypress)="numberOnly($event)"
+             maxlength="13" minlength="9" required>
+            <label for="input" class="Input-label" >{{'commonForm.pageContant.phonenumber' | translate }}</label>
+
+         </div>
+
+
+
+
+
+ 
+
+          <div class="message-space">
+
+            <span *ngIf="MOBILENO.touched && MOBILENO?.errors && MOBILENO?.errors.required || f.submitted && MOBILENO.invalid">
+              {{'commonValidation.phonenumber' | translate }}
+            </span>
+            <span *ngIf="MOBILENO?.errors && MOBILENO?.errors.maxlength">
+              {{'commonValidation.phonelength' | translate }}
+            </span>
+            <span *ngIf=" MOBILENO?.errors && MOBILENO?.errors.minlength">
+              {{'commonValidation.phonerange' | translate }}
+            </span>
+          </div>
+
+
+          <button type="button" class="btn btn-secondary add-buddies" data-toggle="modal" data-target="#look4Buddies">
+            {{'commonForm.buttonTitle.addbuddies' | translate }}
+          </button>
+
+          <div class="row" style="margin:2em 0 0 0 !important;">
+            <div class="col-md-2 mb-4" *ngFor="let buddy of companions">
+              <img [src]="buddy.profilePictureUrl ? picUrl+buddy.profilePictureUrl : 'assets/images/userPlaceholder.png'"
+                (error)="errorHandler($event)" class="buddy-image" alt="">
+              <img src="assets/images/cross.png" class="ad_cross" alt="" (click)="removeBuddies(buddy._id)" class="buddy-remove">
+              <div class="text-center">
+                {{buddy.firstName}}
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+
+
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <h5>{{'commonForm.pageContant.addressInformation' | translate }}</h5>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+          <div *ngIf="!showDropDown">
+
+
+              <div class="Input"> 
+                  <input type="text" class="Input-text" 
+                  readonly name="countryName" 
+                  [(ngModel)]='countryName'>
+
+                  <label for="input" class="Input-label" >Country</label>
+      
+               </div>
+            <div class="message-space"></div>
+
+
+
+            <div class="Input"> 
+                <input type="text" class="Input-text" 
+                readonly name="stateName" [(ngModel)]='stateName'>
+
+
+                <label for="input" class="Input-label" >County</label>
+    
+             </div>
+            <div class="message-space"></div>
+
+
+            <div class="Input"> 
+                <input type="text" class="Input-text" readonly name="cityName"
+                 [(ngModel)]='cityName'>
+
+                <label for="input" class="Input-label" >City</label>
+    
+             </div>
+            <div class="message-space"></div>
+          </div> 
+
+
+          <div *ngIf="showDropDown">
+
+
+              <div class="Input"> 
+                  <select class="custom-select d-block w-100 Input-text" #COUNTRY="ngModel" (change)="findState()" [(ngModel)]="country"
+                  name="country" [ngClass]="{ 'is-invalid': f.submitted && COUNTRY.invalid }" required>
+                  <option hidden value="" disabled selected>{{'commonForm.pageContant.country' | translate }}</option>
+                  <option *ngFor="let co of countries" [value]="co.value">{{co.name}}</option>
+                </select>
+  
+                  <label for="input" class="Input-label" *ngIf="country" >{{'commonForm.pageContant.country' | translate }}</label>
+      
+               </div>
+        
+            <div class="message-space">
+              <span *ngIf="COUNTRY.touched && COUNTRY?.errors && COUNTRY?.errors.required || f.submitted && COUNTRY.invalid">
+                {{'commonValidation.country' | translate }}
+              </span>
+            </div>
+
+
+            <div class="Input"> 
+                <select class="custom-select d-block w-100 Input-text" #STATE="ngModel" [(ngModel)]="state" (change)="findCity()" name="state"
+                [ngClass]="{ 'is-invalid': f.submitted && STATE.invalid }" required>
+                <option hidden value="" disabled selected>{{'commonForm.pageContant.county' | translate }}</option>
+                <option *ngFor="let state of stateList" [value]="state.value">{{state.name}}</option>
+              </select>
+
+                <label for="input" class="Input-label" *ngIf="state" >{{'commonForm.pageContant.county' | translate }}</label>
+    
+             </div>
+
+
+            
+
+            <div class="message-space">
+              <span *ngIf="STATE.touched && STATE?.errors && STATE?.errors.required || f.submitted && STATE.invalid">
+                {{'commonValidation.county' | translate }}
+              </span>
+            </div>
+
+
+            <div class="Input"> 
+                <select class="custom-select d-block w-100 Input-text" #CITY="ngModel" [(ngModel)]="city" required [ngClass]="{ 'is-invalid': f.submitted && CITY.invalid }"
+                name="city">
+                <option hidden value="" disabled selected>{{'commonForm.pageContant.city' | translate }}</option>
+                <option *ngFor="let city of cityList" [value]="city.value">{{city.name}}</option>
+              </select>
+
+                <label for="input" class="Input-label" *ngIf="city" >{{'commonForm.pageContant.city' | translate }}</label>
+    
+             </div>
+
+          
+            <div class="message-space">
+              <span *ngIf="CITY.touched && CITY?.errors && CITY?.errors.required || f.submitted && CITY.invalid">
+                {{'commonValidation.city' | translate }}
+              </span>
+            </div>
+          </div>
+
+          <div class="Input"> 
+              <input type="text" class="Input-text" placeholder="{{'commonForm.pageContant.postcode' | translate }}"
+              #PINCODE="ngModel" name="pincode" (keypress)="omit_special_char($event)"
+              [ngClass]="{ 'is-invalid': f.submitted && PINCODE.invalid }"
+                maxlength="8" [(ngModel)]="pincode" required>
+
+              <label for="input" class="Input-label" >{{'commonForm.pageContant.postcode' | translate }}</label>
+  
+           </div>
+
+
+          <div class="message-space">
+            <span *ngIf="PINCODE.touched && PINCODE?.errors && PINCODE?.errors.required || f.submitted && PINCODE.invalid">
+              {{'commonValidation.postcode' | translate }}
+            </span>
+          </div>
+
+
+          <div class="Input"> 
+              <input type="text" class="Input-text" #ADDRESSONE="ngModel" placeholder="{{'commonForm.pageContant.permanent' | translate }}"
+              name="addressLineOne"
+                [(ngModel)]="addressLineOne" 
+                [ngClass]="{ 'is-invalid': f.submitted && ADDRESSONE.invalid }" required>
+
+              <label for="input" class="Input-label" >{{'commonForm.pageContant.permanent' | translate }}</label>
+  
+           </div>
+       
+          <div class="message-space">
+            <span *ngIf="ADDRESSONE.touched && ADDRESSONE?.errors && ADDRESSONE?.errors.required || f.submitted && ADDRESSONE.invalid">
+              {{'commonValidation.permanent' | translate }}
+            </span>
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <h5>{{'commonForm.pageContant.carinformation' | translate }} </h5>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+          <div class="Input"> 
+               
+          <input type="text" class="Input-text" 
+          placeholder="{{'commonForm.pageContant.regnumber' | translate }}" name="registrationNumber"
+          #REGISTRATION="ngModel" [ngClass]="{ 'is-invalid': f.submitted && REGISTRATION.invalid }" [(ngModel)]="registrationNumber"
+          required>
+  
+         <label for="input" class="Input-label" >{{'commonForm.pageContant.regnumber' | translate }}</label>
+    
+        </div>
+        
+        
+       
+          <div class="message-space">
+            <span *ngIf="REGISTRATION.touched && REGISTRATION?.errors && REGISTRATION?.errors.required || f.submitted && REGISTRATION.invalid">
+              {{'commonValidation.regnumber' | translate }}
+            </span>
+
+          </div>
+
+          <div class="Input"> 
+               
+              <input type="text" class="Input-text"
+              placeholder="{{'commonForm.pageContant.chessisnumber' | translate }}"
+              name="chassisNumber" #CHASSIS="ngModel"
+               [ngClass]="{ 'is-invalid': f.submitted && CHASSIS.invalid }" 
+               [(ngModel)]="chassisNumber" required>
+      
+             <label for="input" class="Input-label" >{{'commonForm.pageContant.chessisnumber' | translate }}</label>
+        
+            </div>
+
+         
+          <div class="message-space">
+
+            <span *ngIf="CHASSIS.touched && CHASSIS?.errors && CHASSIS?.errors.required || f.submitted && CHASSIS.invalid">
+              {{'commonValidation.chessisnumber' | translate }}
+            </span>
+
+          </div>
+
+          <div class="Input"> 
+               
+              <select class="custom-select d-block w-100 Input-text"
+              [(ngModel)]="vehicleTypeId" #VECHICALTYPE="ngModel" 
+              [ngClass]="{ 'is-invalid': f.submitted && VECHICALTYPE.invalid }"
+               required 
+          
+               name="vehicleTypeId">
+               <option hidden value="" disabled selected>{{'commonForm.pageContant.vechicaltype' | translate }}</option>
+               <option *ngFor="let type of vTypes" [value]="type._id">{{type.name}}</option>
+             </select>
+             <label for="input" class="Input-label" *ngIf="vehicleTypeId">{{'commonForm.pageContant.vechicaltype' | translate }}</label>
+        
+            </div>
+       
+          
+          <div class="message-space">
+            <span *ngIf="VECHICALTYPE.touched && VECHICALTYPE?.errors && VECHICALTYPE?.errors.required || f.submitted && VECHICALTYPE.invalid">
+              {{'commonValidation.vechicaltype' | translate }}
+            </span>
+
+          </div>
+
+
+          <div class="Input"> 
+               
+            
+          <select class="custom-select d-block w-100 Input-text" 
+          [(ngModel)]="isAutomatic" required #TYPE="ngModel"
+           [ngClass]="{ 'is-invalid': f.submitted && TYPE.invalid }"
+          name="isAutomatic">
+          <option hidden value="" disabled selected>{{'commonForm.pageContant.geartype' | translate }}</option>
+          <option *ngFor="let item of gearTyps" [value]="item._id">{{item.name}}</option>
+
+        </select>
+             <label for="input" class="Input-label" *ngIf="isAutomatic">{{'commonForm.pageContant.geartype' | translate }}</label>
+        
+            </div>
+
+
+          <div class="message-space">
+            <span *ngIf="TYPE.touched && TYPE?.errors && TYPE?.errors.required || f.submitted && TYPE.invalid">
+              {{'commonValidation.geartype' | translate }}
+            </span>
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <h5>{{'commonForm.pageContant.documents' | translate }}</h5>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+
+
+          <div class="input-group">
+            <input type="text" class="form-control attach Input-text" #ADIPDI="ngModel" name="adiOrPdiBadgeNumber" [(ngModel)]='adiOrPdiBadgeNumber'
+              [ngClass]="{ 'is-invalid': f.submitted && ADIPDI.invalid }" 
+              placeholder="{{'commonForm.pageContant.badge' | translate }}"
+              aria-label="Attach Istructor Badge" aria-describedby="button-addon2" 
+                 required>
+              <label for="input" class="Input-label" style="z-index:1243">{{'commonForm.pageContant.badge' | translate }}</label>
+
+            <div class="input-group-append">
+              <input type="file" name="bedge" class="file" accept="image/x-png,image/gif,image/jpeg" (change)="addDocument($event,'BADGE_NUMBER')"
+                #badge>
+              <button class="btn btn-outline-secondary" type="button" (click)="badge.click();" id="button-addon2">{{'commonForm.buttonTitle.upload' | translate }}
+                <i class="fa fa-upload ml-2" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="message-space">
+            <span *ngIf="ADIPDI.touched && ADIPDI?.errors && ADIPDI?.errors.required || f.submitted && ADIPDI.invalid">
+              {{'commonValidation.badge' | translate }}
+            </span>
+          </div>
+
+
+
+
+          <div class="input-group">
+            <input type="text" class="form-control attach Input-text" aria-label="Attach  Driving License" aria-describedby="button-addon2"
+              #Dl="ngModel" placeholder="{{'commonForm.pageContant.driving' | translate }}"
+               [ngClass]="{ 'is-invalid': f.submitted && Dl.invalid }"
+              name="drivingLicence" [(ngModel)]='drivingLicense' name="dlName" required>
+
+              <label for="input" class="Input-label" style="z-index:1243">{{'commonForm.pageContant.driving' | translate }}</label>
+
+            <div class="input-group-append">
+              <input type="file" name="drivingLic" class="file" accept="image/x-png,image/gif,image/jpeg" (change)="addDocument($event,'DRIVING_LICENSE')"
+                #licence>
+              <button class="btn btn-outline-secondary" (click)="licence.click();" type="button" id="button-addon2">{{'commonForm.buttonTitle.upload' | translate }}
+                <i class="fa fa-upload ml-2" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <span *ngIf="Dl.touched  && Dl?.errors && Dl?.errors.required || f.submitted && Dl.invalid">
+            {{'commonValidation.driving' | translate }}
+          </span>
+          <div class="message-space"></div>
+
+        </div>
+        <!-- <button (click)="uploadFile()">add</button> -->
+        <!-- doc code -->
+        <!-- <img [src]="isProfile ? image : 'assets/images/driver.png'" class="photo_upload" alt=""> -->
+        <div class="doc_detail">
+
+          <div class="row" style="margin:2em 0 0 0 !important;">
+            <div class="col-md-4 m-3 " *ngFor="let doc of documents">
+              <img id="doc" [src]="doc && doc.view ? doc.view : 'assets/images/docImage.jpeg'" data-toggle="modal"
+                data-target="#myModal1" (click)="getImagepath(doc.view)" (error)="errorHandler($event)" class="buddy-image"
+                alt="">
+
+              <img src="assets/images/cross.png" class="ad_cross" alt="" (click)="removeDocument(doc.documentType)"
+                class="buddy-remove ">
+
+              <div class="text-center ">
+                {{doc.documentType ? doc.documentType : "NA"}}
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </div>
+
+
+
+
+      </div>
+
+
+
+    </div>
+
+    <div class="row" style="margin:2em 0 2em 0 !important;">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12 submit-btn-success">
+          <button class="btn btn-primary" class="submit-btn">{{btnTitle}}</button>
+
+
+        </div>
+      </div>
+    </div>
+
+
+  </form>
+
+  <div class="modal fade" id="look4Buddies" tabindex="-1" role="dialog" aria-labelledby="look4BuddiesLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <img src="./assets/images/cancilPop.png" #close class="close-icon" data-dismiss="modal">
+        <h2 class="modal-title">Add Buddies</h2>
+
+        <div class="form-wrapper">
+
+          <input type="text" class="mod_input buddy-search-box" placeholder="Search companions" name="Search" value=""
+            (input)="searchCompanions($event.target.value)">
+
+          <div class="row buddy" *ngFor="let item of final">
+
+
+            <div class="col-md-4">
+              <img [src]="item.profilePictureUrl ? picUrl+item.profilePictureUrl : 'assets/images/userPlaceholder.png'"
+                (error)="errorHandler($event)" class="sm-image" alt="">
+            </div>
+            <div class="col-md-6 buddy-name">
+              {{item.firstName ? item.firstName: item.email}}
+            </div>
+            <div class="col-md-2 buddy-add">
+              <button class="add btn btn-success" (click)="addBuddies(item._id)" data-dismiss="modal">+</button>
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+            <input type="text" class="search " placeholder="Search" (input)="searchName($event.target.value)" name="" id="">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+        </div>
+        <div class="item_itrate">
+          <div class="modal-body" *ngFor="let item of schoolList"  data-dismiss="modal" (click)="getSchoolNameplaceHolder(item.school.schoolName,item._id)">
+            <p class="item_school">{{item.school.schoolName ? item.school.schoolName : NA}} </p>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+
+</div> -->
+
+
+
+
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- <h2 class="modal-title">Filter</h2> -->
+      <div class="form-wrapper">
+
+        <input type="text" class="mod_input school" name="txtSearch" [(ngModel)]="txtSearch"
+         placeholder="Search"
+          (input)="searchName($event.target.value)" name="" id="">
+
+        <div class="search-area">
+          <div class="row  ssitem mb-2" *ngFor="let item of schoolList | paginate: { id:'modalPaginate', itemsPerPage: 10, currentPage: p,totalItems: total }"
+            data-dismiss="modal" (click)="getSchoolNameplaceHolder(item,item.school.schoolName,item._id)">
+            <!-- <p class="item_school"> {{item.firstName + " "+item.lastName}} </p> -->
+            <div class="col-3">
+              <img [src]=" item.profilePictureUrl ? picUrl+ item.profilePictureUrl :   'assets/images/userPlaceholder.png'"
+                (error)="errorHandler($event)" class="photo_upload popup" alt="">
+
+            </div>
+            <div class="col-9 search-text">
+              {{item.school.schoolName ? item.school.schoolName : NA}}
+            </div>
+          </div>
+
+        </div>
+        <div *ngIf="schoolList.length <= 0 ">
+          <p id="bg-text">N0 Record..!</p>
+        </div>
+
+
+
+        <div class="pagination" class="my-pagination">
+          <pagination-controls id="modalPaginate" maxSize="5" (pageChange)="paginationForSchool($event)"></pagination-controls>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="modal fade" id="myModal1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content no-padding">
+
+      <div class="modal-body widthAuto">
+        <div class="text-center">
+          <img class="showImage" [src]="imagePath" alt="">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

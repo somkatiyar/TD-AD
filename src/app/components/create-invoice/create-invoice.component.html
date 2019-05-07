@@ -1,0 +1,218 @@
+<div class="container">
+  <div class="container">
+    
+      <a  routerLink="/payment-history" class="previous round">&#8249;</a>
+
+  </div>
+
+  <div class="row" style="margin:1em 0 0 0 !important;">
+    <div class="col-lg-2 col-md-3 col-sm-12">
+        <div class="input-group mb-3">
+            <input type="text" bsDatepicker placement="bottom right" 
+            style="cursor: pointer;"
+            #dp="bsDatepicker" class="form-control date-picker-style" 
+            placeholder="{{'createInvoice.fromdateTitle' | translate }}"
+            [(ngModel)]="fromDate" 
+            (ngModelChange)="onChange()"
+              aria-label="From Date" name="fromDate" 
+             required aria-describedby="button-addon3">
+
+            <div class="input-group-append" id="button-addon3">
+              <button (click)="dp.toggle()" class="btn btn-outline-secondary date-btn-style" type="button">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-12">
+        <div class="input-group mb-3">
+            <input type="text" bsDatepicker #dp1="bsDatepicker"
+            style="cursor: pointer;"
+             class="form-control date-picker-style" 
+             [(ngModel)]="toDate"
+             (ngModelChange)="onChange()"
+             placeholder="{{'createInvoice.todateTitle' | translate }}"
+              aria-label="To Date" name="toDate" 
+           required aria-describedby="button-addon3">
+
+            <div class="input-group-append" id="button-addon3">
+              <button (click)="dp1.toggle()" class="btn btn-outline-secondary date-btn-style" type="button">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+              </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-12">
+        <select class="custom-select mb-3" [(ngModel)]="paymentType" id="inputGroupSelect01" (change)="setValue()">
+            <option value="" selected>{{'createInvoice.selectItem.chooseOneTitle' | translate }}</option>
+            <option value="individual">{{'createInvoice.selectItem.individualdriverTitle' | translate }}</option>
+            <option value="school">{{'createInvoice.selectItem.schoolTitle' | translate }}</option>
+        </select>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-12" *ngIf="paymentType">
+        <div class="input-group mb-3" *ngIf="paymentType == 'individual'">
+            <select class="custom-select customPaddingRight " [(ngModel)]="selectedIndividualId"  id="inputGroupSelect04" aria-label="Example select with button addon">
+              <option value="" selected>{{'createInvoice.selectItem.chooseOneTitle' | translate }}</option>
+              <option *ngFor="let individual of individuals" [value]="individual._id">{{individual.email}}</option>
+            </select>
+            <!-- <input type="text" class="mod_input driver" placeholder="Select Driver"
+            style="cursor: pointer;" [(ngModel)]="showDriverName" (click)="closeParentModel()"
+        
+             data-toggle="modal" name="showDriverName" data-target="#myModal1"> -->
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" (click)="isSearch = !isSearch"  data-toggle="modal" data-target="#filter"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+          </div>
+
+
+          <div class="input-group mb-3" *ngIf="paymentType == 'school'">
+              <select class="custom-select" [(ngModel)]="selectedSchoolId" id="inputGroupSelect04" aria-label="Example select with button addon">
+                <option value="" selected>{{'createInvoice.selectItem.chooseschoolTitle' | translate }}</option>
+                <option *ngFor="let school of schools" [value]="school.school._id">{{school.school.schoolName}}</option>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)="isSearch = !isSearch"  data-toggle="modal" data-target="#filter"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </div>
+            </div>
+      <!-- <i class="fa fa-filter" style="float: right;color: #f00;font-size: 38px;" aria-hidden="true" data-toggle="modal" data-target="#filter"></i> -->
+    </div>
+    <div class="col-lg-2 col-md-12 col-sm-12">
+        
+            <button class="btn btn-outline-secondary detail-btn-style" type="button" (click)="checkGetDetails()">
+              {{'createInvoice.buttonTitle.getdetailsTitle' | translate }}
+            </button>
+           
+    </div>
+  </div>
+  <div class="m-4" *ngIf="paymentType == 'individual'">
+      <div class="row ssitem mb-3" *ngFor="let id of invoiceDetails" style="box-shadow: 0px 2px 15px #c1c1c1;">
+          <div class="col-1">
+            <img src="assets/images/userPlaceholder.png" class="invoice-detail-image">
+          </div>
+          <div class="col-4 search-text">
+            <strong> {{'createInvoice.invoiceDetails.emailTitle' | translate }}</strong><br>
+            {{id.driverId.email}}
+          </div>
+          <div class="col-4 search-text">
+            <strong>{{'createInvoice.invoiceDetails.bookingidTitle' | translate }}</strong><br>
+            {{id.bookingId}}
+          </div>
+          <div class="col-3 search-text">
+            <strong>{{'createInvoice.invoiceDetails.ridedateTitle' | translate }}</strong><br>
+            {{id.startDateTime | date: 'fullDate'}}
+          </div>
+      </div>
+  </div>
+  <div class="m-4" *ngIf="paymentType == 'school'">
+      <div class="row ssitem mb-3" *ngFor="let id of invoiceDetails" style="box-shadow: 0px 2px 15px #c1c1c1;">
+          <div class="col-1 search-icon text-left">
+              <i class="fa fa-university" aria-hidden="true"></i>
+          </div>
+          <div class="col-4 search-text">
+              <strong>{{'createInvoice.invoiceDetails.emailTitle' | translate }}</strong><br>
+              {{id.driverId.email}}
+            </div>
+            <div class="col-4 search-text">
+              <strong>{{'createInvoice.invoiceDetails.bookingidTitle' | translate }}</strong><br>
+              {{id.bookingId}}
+            </div>
+            <div class="col-3 search-text">
+              <strong>{{'createInvoice.invoiceDetails.ridedateTitle' | translate }}</strong><br>
+              {{id.startDateTime | date: 'fullDate'}}
+            </div>
+      </div>
+  </div>
+  <div class="m-4" *ngIf="invoiceDetails && invoiceDetails.length">
+      <div class="row">
+          <button class="btn btn-outline-secondary detail-btn-style" type="button" (click)="createInvoice()" style="max-width: 300px;">
+            {{'createInvoice.buttonTitle.createinvoiceTitle' | translate }}
+          </button>
+      </div> 
+  </div>
+  
+
+
+
+
+
+
+
+  <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="filterLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+     
+              <div class="form-wrapper">
+              
+  
+ 
+
+  
+                <div class="input-group mb-3" *ngIf="paymentType == 'individual'">
+
+                  <input type="text" class="mod_input " (input)="searchIndividual()" [(ngModel)]="individualSearchedText" placeholder="{{'createInvoice.popUpPlaceholder.individual' | translate }}" aria-label="Search for individual driver" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <!-- <button class="btn btn-outline-secondary" type="button" (click)="isSearch = !isSearch"><i class="fa fa-caret-down" aria-hidden="true"></i></button> -->
+                  </div>
+                </div>
+  
+                <div *ngIf="paymentType == 'individual'" class="search-area">
+                    <div  class="row  ssitem mb-2" *ngFor="let individual of individuals | paginate: { id:'driver',itemsPerPage: 10, currentPage: p,totalItems: driverTotal }" (click)="selectIndividual(individual._id)"  data-toggle="modal" data-target="#filter">
+                        <div class="col-3">
+                            <img [src]=" individual.profilePictureUrl ? picUrl+ individual.profilePictureUrl :   'assets/images/userPlaceholder.png'" (error)="errorHandler($event)" class="photo_upload" alt="">
+
+                          <!-- <img src="assets/images/userPlaceholder.png" class="search-image"> -->
+                        </div>
+                        <div class="col-9 search-text">
+                            {{individual.firstName}}
+                            <br>
+                            {{individual.email}}
+                        </div>
+                    </div>
+                    <div *ngIf="individuals.length <= 0 ">
+                        <p id="bg-text">N0 Record..!</p>
+                      </div>
+                </div>
+                <div class="pagination" class="my-pagination" *ngIf="paymentType == 'individual'" >
+                    <pagination-controls id="driver" maxSize="5" (pageChange)="paginationForDrivers($event)"></pagination-controls>
+                  </div>
+
+  
+                <div class="input-group mb-3" *ngIf="paymentType == 'school'">
+                  <input type="text" class="form-control" (input)="searchSchool()" [(ngModel)]="schoolSearchedText" placeholder="{{'createInvoice.popUpPlaceholder.school' | translate }}" aria-label="Search for individual driver" aria-label="Search for school" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <!-- <button class="btn btn-outline-secondary" type="button" (click)="isSearch = !isSearch"><i class="fa fa-caret-down" aria-hidden="true"></i></button> -->
+                  </div>
+                </div>
+  
+                <div *ngIf="paymentType == 'school'" class="search-area">
+                    <div  class="row  mb-3 ssitem" *ngFor="let school of schools  | paginate: {id:'school', itemsPerPage: 10, currentPage: p,totalItems: totalPages }"  (click)="selectSchool(school.school._id)"  data-toggle="modal" data-target="#filter">
+                        <div class="col-3 search-icon text-center">
+                          <i class="fa fa-university" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-9 search-text">
+                          {{school.school.schoolName}}
+                          <br>
+                          {{school.user.email}}
+                        </div>
+                    </div>
+                    
+                </div>
+
+              </div>
+
+              <div class="pagination" class="my-pagination" *ngIf="paymentType == 'school'">
+                  <pagination-controls maxSize="5" id='school' (pageChange)="paginationForSchool($event)"></pagination-controls>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+        </div>
+
+    </div>
+  </div>
+  
+  
+  
+  
+</div>
+

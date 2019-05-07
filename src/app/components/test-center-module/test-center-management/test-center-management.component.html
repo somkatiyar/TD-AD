@@ -1,0 +1,59 @@
+
+ <!-- <div class="back" *ngIf="!isPagination">
+    <a routerLink="/test-center-management" (click)="pageLoad()" class="previous round" title="Previous Page">&#8249;</a>
+
+</div> -->
+    <div >
+      <button class="btn_add" (click)="goToUpdatePage()">Add</button>
+    </div>
+   
+       <div class="cust_select">
+         
+          <select class="custom-select dropDown " (change)="chooseFilter()" [(ngModel)]="selectFilter">
+              <!-- <option hidden value="" disabled selected="selected">Please Select </option> -->
+              <option value="all" selected>All </option>
+              <option value="disable">Disable</option>
+              <option value="enable">Enable</option>
+            </select>
+       </div>
+ 
+      
+
+<div class="row" style="margin:4em 2em 2em 2em !important; padding-top: 10px;" >
+
+  <div class="col-md-3"  *ngFor="let item of testCenterList | paginate: {  itemsPerPage: 10, currentPage: p,totalItems: total } " >
+      <div class="card" style="margin-bottom: 10px; min-height: 200px">
+            <div class=" edit_driver">
+                    <input style="margin-top: 20px;"
+                  (click) ="disableItem('Disable',item)" type="button" [class]="setClass(item)" [title]="isVerified(item)" [value]="isVerified(item)">
+              
+                   </div>
+          <i class="fa fa-pencil-square-o edit_driver" aria-hidden="true" (click)="goToUpdatePage(item._id ? item._id : '5')"></i>
+
+          <div class="container">
+              
+          
+            <b>Test Center Name</b> 
+            <p>{{item.name.length > 0 ? item.name : "NA"}}</p> 
+    
+          </div>
+           
+          <div class="container">
+              <b>Address</b> 
+              <p>{{item.addressId ? item.addressId.addressLineOne   : "NA"}}</p> 
+              
+            </div>
+        </div>
+  </div>
+
+
+</div>
+<div *ngIf="isPagination">
+    <pagination-controls (pageChange)="paginationFortestList($event)" ></pagination-controls>
+
+</div>
+
+    <div id="background" *ngIf="!isPagination && testCenterList.length<=0">
+    <p id="bg-text">No Record..!</p>
+    </div>
+  

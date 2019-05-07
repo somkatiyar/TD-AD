@@ -1,0 +1,20 @@
+
+<app-loader [hidden]="!varCtrl.isLoading" ></app-loader>
+
+<app-header *ngIf="varCtrl.isHeader"></app-header>  
+
+<ng-sidebar-container [ngStyle]="{'height': varCtrl.isHeader ? 'calc(100vh - 56px)' : '100vh' }">
+  
+  <!-- A sidebar -->
+  <ng-sidebar *ngIf="varCtrl.isSideBar ? varCtrl.isSideBar : false" [(opened)]="varCtrl._opened" mode="push" position="left">
+    <app-sidebar></app-sidebar>
+  </ng-sidebar>
+
+  <!-- Page content -->
+  <div ng-sidebar-content>
+  
+    <router-outlet (activate)='onActivate($event)'></router-outlet>
+
+   
+  </div>
+</ng-sidebar-container>

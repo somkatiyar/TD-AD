@@ -1,0 +1,269 @@
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7c71fViNSKkLI2YOj0k8oxZEDvUYbzOY&libraries=places"></script>
+
+
+
+<div class="container">
+
+  <div class="row" style="margin:2em 0 0 0 !important;">
+
+    <div class="col-md-6"  >
+       
+            <a routerLink="/test-center-management"  class="previous round" title="Previous Page">&#8249;</a>
+        
+   
+      <div>
+        <form class="pop_met" #f="ngForm" novalidate (ngSubmit)="f.form.valid && register()">
+
+          <label class="animaterContainer" *ngIf="testCenterId">
+            <button type="button" [class]="btnClass" (click)="disableItem('disable')">{{disableBtn}}</button>
+     
+         </label>
+
+
+
+         <div class="Input">
+          <input type="text" class="mod_input Input-text" #TESTCENTER="ngModel" placeholder="Test Center Name" name="TEST_CENTER" [ngClass]="{ 'is-invalid': f.submitted && TESTCENTER.invalid }"
+          [(ngModel)]='Test_center_name' required>
+   
+          <label for="input" class="Input-label" >Name</label>
+          <span *ngIf="TESTCENTER.touched && TESTCENTER.errors?.required ||f.submitted && TESTCENTER.invalid" class="span_validation">
+            Test Center Name is required
+          </span>
+        </div>
+      
+
+ 
+
+        <div class="Input">
+          <input type="text" class="mod_input Input-text" #CONTACTNUMBER="ngModel" placeholder="Contact Person Number" name="contactNumber"
+            [ngClass]="{ 'is-invalid': f.submitted && CONTACTNUMBER.invalid }" [(ngModel)]='contactNumber' (keypress)="numberOnly($event)"
+            maxlength="13" required>
+            <label for="input" class="Input-label" >Contact Person Number</label>
+
+          <span *ngIf="CONTACTNUMBER.touched && CONTACTNUMBER.errors?.required ||f.submitted && CONTACTNUMBER.invalid" class="span_validation">
+            Contact Number is required
+          </span>
+        </div>
+
+
+        <div class="Input">
+          <input type="text" class="mod_input Input-text" #EMAIL="ngModel" 
+          placeholder="Email" name="email" 
+          pattern='^\w+[\w-\.]*\@\w+((-\w+)|(\w*))(\.[a-z]{2,7}){1,2}$'
+
+           [ngClass]="{ 'is-invalid': f.submitted && EMAIL.invalid }"
+            [(ngModel)]='email' >
+            <label for="input" class="Input-label" >Email</label>
+
+          <span *ngIf="EMAIL.touched && EMAIL.errors?.required ||f.submitted && EMAIL.invalid" class="span_validation">
+            Email is required
+          </span>
+
+          <span *ngIf="EMAIL.touched && EMAIL?.errors && EMAIL?.errors.pattern" class="span_validation">
+            Enter valid email
+          </span>
+        </div>
+
+        
+       
+
+        <div class="Input">
+
+          <select class="custom-select d-block w-100 Input-text" #COUNTRY="ngModel" (change)="findState()" 
+          [(ngModel)]="country" name="country"
+            [ngClass]="{ 'is-invalid': f.submitted && COUNTRY.invalid }" required>
+            <option value="" disabled selected>Select Country </option>
+            <option *ngFor="let co of countries" [value]="co.value">{{co.name}}</option>
+          </select>
+   
+          <label for="input" class="Input-label" *ngIf="country">Select Country </label>
+         
+          <span *ngIf="COUNTRY.touched && COUNTRY.errors?.required ||f.submitted && COUNTRY.invalid" class="span_validation">
+            Country is required
+          </span>
+        </div>
+
+
+
+        <div class="Input">
+
+          <select class="custom-select d-block w-100 Input-text" #STATE="ngModel" [(ngModel)]="state" (change)="findCity()" [ngClass]="{ 'is-invalid': f.submitted && STATE.invalid }"
+            name="state" required>
+            <option hidden value="" disabled selected>Select County </option>
+            <option *ngFor="let state of stateList" [value]="state.value">{{state.name}}</option>
+          </select>
+   
+          <label for="input" class="Input-label" *ngIf="state">Select County </label>
+         
+      
+          <span *ngIf="STATE.touched && STATE.errors?.required ||f.submitted && STATE.invalid" class="span_validation">
+            County is required
+             </span>
+        </div>
+
+         
+        <div class="Input">
+
+          <select class="custom-select d-block w-100 Input-text" #CITY="ngModel" [(ngModel)]="city" [ngClass]="{ 'is-invalid': f.submitted && CITY.invalid }"
+          required name="city">
+          <option hidden value="" disabled selected>Select City </option>
+          <option *ngFor="let city of cityList" [value]="city.value">{{city.name}}</option>
+        </select>
+   
+          <label for="input" class="Input-label" *ngIf="city">Select City </label>
+         
+      
+    
+          <span *ngIf="CITY.touched && CITY.errors?.required ||f.submitted && CITY.invalid" class="span_validation">
+            City is required
+          </span>
+        </div>
+
+
+         
+        <div class="Input">
+
+          <input type="text"  class="mod_input Input-text" (input)="search" id="pac-input"  autocorrect="off" autocapitalize="off" spellcheck="off"
+          #search (keypress)="GetLocation($event)" #ADDRESSLINEONE="ngModel" placeholder="Search Address..." name="AddressLineOne"
+          [ngClass]="{ 'is-invalid': f.submitted && ADDRESSLINEONE.invalid }" [(ngModel)]='AddressLineOne' required>
+   
+          <label for="input" class="Input-label" >Search Address</label>
+         
+      
+    
+          <span *ngIf="ADDRESSLINEONE.touched && ADDRESSLINEONE.errors?.required ||f.submitted && ADDRESSLINEONE.invalid" class="span_validation">
+            Required Field
+          </span>
+        </div>
+
+
+          
+           
+        
+        <div class="Input">
+
+          <input type="text" class="mod_input Input-text" maxlength="8"
+          (keypress)="omit_special_char($event)"
+           placeholder="Postcode"  name="pincode" required [ngClass]="{ 'is-invalid': f.submitted && PINCODE.invalid }"
+            #PINCODE="ngModel" [(ngModel)]="pincode">
+   
+          <label for="input" class="Input-label" >Postcode</label>
+         
+          <span *ngIf="PINCODE.touched && PINCODE.errors?.required ||f.submitted && PINCODE.invalid" class="span_validation">
+            Postcode is required
+           </span>
+        </div>
+
+
+
+          
+        <div class="Input">
+
+          <input type="time" name="fromTime" #FROM="ngModel" style="cursor: pointer;"
+          atp-time-picker value="20:55"
+          [ngClass]="{ 'is-invalid': f.submitted && FROM.invalid }" class="mod_input Input-text"
+            id="from" [(ngModel)]="fromTime" required>
+   
+          <label for="input" class="Input-label" >Opening Time</label>
+         
+   
+          <span *ngIf="FROM.touched && FROM.errors?.required ||f.submitted && FROM.invalid" class="span_validation">
+            Required Field
+          </span>
+        </div>
+
+
+         
+
+        
+        <div class="Input">
+
+          <input type="time" name="toTime" class="mod_input Input-text"
+          style="cursor: pointer;"
+          atp-time-picker value="20:55"
+           #TO="ngModel" [ngClass]="{ 'is-invalid': f.submitted && FROM.invalid }"
+            id="to" [(ngModel)]="toTime" required>
+   
+          <label for="input" class="Input-label" >Closing Time</label>
+         
+          <span *ngIf="TO.touched && TO.errors?.required ||f.submitted && TO.invalid" class="span_validation">
+            Required Field
+          </span>
+        </div>
+
+           
+
+         
+
+           
+
+
+         
+
+          <div class="tst-add">
+            <button type="submit" name="" value="Submit" class="loggin_pop sign_page_sub">{{btnTitle}}</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+
+    <div class="col-md-6">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <agm-map id="agm" [latitude]="latitude" 
+      [longitude]="longitude"
+       [scrollwheel]="true"
+        markerDraggable="true"
+         openInfoWindow="true"
+         (mapClick)="mapClicked($event)"
+        [styles]="styles" [zoom]="zoom">
+        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+      </agm-map>
+      <!-- <div id="googleMap" style="width:100%;height:550px;"></div> -->
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" id="myModal11" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+  
+        <div class="form-wrapper">
+  
+          <input type="text" class="mod_input " [(ngModel)]="txtSearch" 
+          placeholder="Search" 
+          
+            name="" id="">
+
+
+   
+
+
+  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+  
+          <div class="pagination" class="my-pagination">
+            <pagination-controls id="driver11" maxSize="5" (pageChange)="paginationFordrivers($event)"></pagination-controls>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>

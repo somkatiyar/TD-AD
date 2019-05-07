@@ -1,0 +1,196 @@
+<br/>
+<a routerLink="/booking-history" class="previous round back" title="Previous Page">&#8249;</a>
+<h3 class="tit">Ride Details</h3>
+      
+<div class="container">
+    <div *ngFor="let item of bookingRides  | paginate: { id:'paginate',itemsPerPage: 10, currentPage: p,totalItems: totalRide};let i = index">
+        <div class="row cust-card mt-4">
+          <div class="col-lg-2">
+    
+    
+            <img [src]="item.driverId.profilePictureUrl ? picUrl+item.driverId.profilePictureUrl : 'assets/images/userPlaceholder.png'" (error)="errorHandler($event)" class="card-image">
+    
+          </div>
+    
+          <div class="col-lg-3 card-txt">
+            <b>Driver   </b>
+            <div>{{item.driverId.firstName+ " "+item.driverId.lastName}} </div>
+            <b>Pick Address</b>
+            <div>{{item.pickUpAddress ? item.pickUpAddress.name :"NA"}}</div>
+           
+          </div>
+    
+        
+          <div class="col-lg-3 card-txt">
+            <b>Start Date/Time</b>
+            <div>{{item.startDateTime ? (item.startDateTime | date :  "dd.MM.y  HH:mm:ss ") :"NA"}}</div>
+            <b>End Date</b>
+            <div>{{item.endDateTime ? (item.endDateTime | date :  "dd.MM.y  HH:mm:ss ") :"NA"}}</div>
+          </div>
+          
+          <div class="col-lg-3 card-txt">
+            <b>Slot</b>
+            <div>{{item.slotId ? item.slotId.name :"NA"}}</div>
+            <b>Status</b>
+            <div>{{item.status ? item.status :"NA"}}</div>
+          </div>
+         
+          <div class="col-lg-1 card-txt" style="text-align: center;" *ngIf="item.status!='COMPLETED'">
+            <button class="edit-btn-style" title="Update Slot" #open (click)="renderToUpdateSlot(item,i)"  data-toggle="modal" data-target="#myModal">
+              <i class="fa">Update</i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="pagination_cls">
+        <pagination-controls id ="paginate" (pageChange)="paginationForBookingRide($event)" ></pagination-controls>
+      </div>
+</div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+       <div class="modal-content">
+       
+        <div class="modal-body">
+         
+      <form action="" method="" class="pop_met" #myForm="ngForm" (ngSubmit)="update()">
+
+        <p>
+                Update Time Slot and Driver
+        </p>
+         <div class="row"> 
+    
+             <div class="col-md-10 ">
+               
+                <div class="input_conatiner">
+                    <!-- <select  name="driver" [(ngModel)]="slotupdate.driver" class="form-control">
+                      <option [ngValue]="undefined" disabled  selected> Please select driver </option>
+                        <option *ngFor="let driver of drivers"  [value]="driver._id" >
+                            {{driver.firstName + " "+driver.lastName}} <br/>
+                            ({{driver._id}})
+                        </option>
+                    </select>  -->
+
+                    <input type="text" class="mod_input" placeholder="Select Driver"
+                    style="cursor: pointer;" [(ngModel)]="showDriverName" (click)="closeParentModel()"
+                
+                     data-toggle="modal" name="showDriverName" data-target="#myModal1"> 
+                    <br/>
+                    <select  name="time" [(ngModel)]="slotupdate.time" class="form-control">
+                      <option [ngValue]="undefined" disabled  selected> Please select timeslot </option>
+                      <option *ngFor="let time of timeslots"  [value]="time._id" >
+                          {{time.name}}
+                      </option>
+                  </select>
+                    <button type="submit" name=""  value="Submit" (click)="UpdateDriverAndSlot()" class="loggin_pop sign_page_sub">Update</button>
+                </div>
+    
+              </div>
+    
+            </div>
+           
+          </form>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" #close class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+
+
+
+  <div id="background" *ngIf="bookingRides.length<=0">
+    <p id="bg-text">No Booking Found</p>
+    <button (click)="createNewBooking()" class="createbookingBtn">Create New Booking</button>
+
+    </div>
+  
+
+<!-- 
+    <div class="container">
+
+  
+
+      <div class="modal fade" id="myModal1" role="dialog">
+        <div class="modal-dialog">
+        
+
+          <div class="modal-content">
+            <div class="modal-header">
+              <input type="text" class="mod_input " [(ngModel)]="txtSearch" placeholder="Search" (input)="searchName($event.target.value)" name="" id="">
+           
+            </div>
+            <div class="item_itrate">
+              <div class="modal-body" *ngFor="let item of drivers | paginate: {id:'modalPaginate', itemsPerPage: 10, currentPage: pTotal,totalItems: total }"  data-dismiss="modal"
+               (click)="getDriverNamePlaceHolder(item.firstName,item.lastName,item._id)">
+                <p class="item_school"> {{item.firstName + " "+item.lastName}} </p>
+              </div>
+              <div id="background" *ngIf="drivers.length <= 0 ">
+                  <p id="bg-text">N0 Record..!</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default"  data-dismiss="modal">Close</button>
+            </div>
+            <div class="pagination_cls" >
+              <pagination-controls id="modalPaginate" (pageChange)="paginationForDrivers($event)"></pagination-controls>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div> -->
+
+
+
+
+    <div class="modal fade" id="myModal1" role="dialog" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <!-- <h2 class="modal-title">Filter</h2> -->
+            <div class="form-wrapper">
+      
+                <input type="text" class="mod_input " [(ngModel)]="txtSearch" placeholder="Search" (input)="searchName($event.target.value)" name="" id="">
+
+              <div class="search-area">
+                <div class="row  ssitem mb-2" *ngFor="let item of drivers | paginate: { id:'modalPaginate', itemsPerPage: 10, currentPage: p,totalItems: total }"
+                  data-dismiss="modal" (click)="getDriverNamePlaceHolder(item.firstName,item.lastName,item._id)">
+                  <!-- <p class="item_school"> {{item.firstName + " "+item.lastName}} </p> -->
+                  <div class="col-3">
+                      <img [src]=" item.profilePictureUrl ? picUrl+ item.profilePictureUrl :   'assets/images/userPlaceholder.png'" (error)="errorHandler($event)" class="photo_upload" alt="">
+      
+                  </div>
+                  <div class="col-9 search-text">
+                    {{item.firstName + " "+item.lastName}}
+                    <br> {{item.email ? item.email : "NA"}}
+                  </div>
+                </div>
+      
+              </div>
+              <div *ngIf="drivers.length <= 0 ">
+                <p id="bg-text">N0 Record..!</p>
+              </div>
+      
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+      
+              <div class="pagination" class="my-pagination">
+                <pagination-controls id="modalPaginate" maxSize="5" (pageChange)="paginationForDrivers($event)"></pagination-controls>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </div>

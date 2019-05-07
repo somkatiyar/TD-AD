@@ -1,0 +1,488 @@
+<div class="container">
+  <a (click)="goBack()" class="previous round" title="Previous Page">&#8249;</a>
+
+</div>
+<div id="main_div">
+  <div class="main-content">
+
+    <div id="page-wrapper">
+      <div class="main-page">
+
+        <div class="container1">
+
+          <div class="row" id="mainRow">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+              <br>
+              <br>
+              <div style="text-align: right;">
+
+                <!-- <button *ngIf="showDriverbtn" type="button" class="btn btn-info btn-md" (click)="goToSchoolDriverPage()" >disabled</button> -->
+                <label class="animaterContainer" *ngIf="isUpdatePage">
+                  <button [class]="btnClass" (click)="disableItem('disable')">{{disableBtn}}</button>
+
+                </label>
+                <span class="showDriverbtnCover">
+                  <button *ngIf="showDriverbtn" type="button" class="btn btn-info btn-md" (click)="goToSchoolDriverPage()"
+                  style="
+                       margin-right: 10px; margin-left: 10px;padding: 5px">Show Driver</button>
+                <label *ngIf="showDriverbtn" for="totalDrivers" class="circle totalDriversCircle">{{totalDrivers}}</label>
+                </span>
+
+              </div>
+
+              <form #f="ngForm" novalidate class="pop_met" (ngSubmit)="f.form.valid && register()">
+
+
+
+
+
+                <div class="row">
+
+                  <div class="col-md-6 ">
+                    <h4 class="schl">School Information</h4>
+                    <div class="input_conatiner">
+
+                        <div class="Input"> 
+               
+                            <input type="text" class="Input-text" #FNAME="ngModel" placeholder="* School Name" required name="Name"
+                            [ngClass]="{ 'is-invalid': f.submitted && FNAME.invalid }" [(ngModel)]="details.schoolName"
+                            style="margin: 20px 0px">
+                    
+                           <label for="input" class="Input-label" >* School Name</label>
+                      
+                          </div>
+                  
+                  
+                  
+                  
+                  
+                    
+                      <span *ngIf="FNAME.touched && FNAME.errors?.required ||f.submitted && FNAME.invalid" class="span_validation school">
+                        Name is required
+                      </span>
+
+
+                      <div class="Input"> 
+               
+                          <input  type="email" class="Input-text" #EMAIL="ngModel" placeholder="* Email" name="email"
+                          [(ngModel)]='email'pattern='^\w+[\w-\.]*\@\w+((-\w+)|(\w*))(\.[a-z]{2,7}){1,2}$'
+                           [ngClass]="{ 'is-invalid': f.submitted && EMAIL.invalid }"
+                          required style="margin: 20px 0px">
+                  
+                         <label for="input" class="Input-label" >* Email</label>
+                    
+                        </div>
+
+                   
+            
+                          <span *ngIf="EMAIL.touched && EMAIL.errors?.required ||f.submitted && EMAIL.invalid" class="span_validation school">
+                            Email is required
+                          </span>
+    
+                          <span *ngIf="EMAIL.touched && EMAIL.errors?.pattern" class="span_validation school">
+                            Enter valid email
+                          </span>
+    
+             
+                 
+
+                      <!-- <input type="password" class="mod_input" #PASSWORD="ngModel"
+                       placeholder="* password" name="password" [(ngModel)]='password'
+                       [ngClass]="{ 'is-invalid': f.submitted && PASSWORD.invalid }"
+                        required> -->
+
+<!-- 
+                      <div class="passwordImageWrap">
+                        <input [type]="show ? 'text' : 'password'" minlength="8" class="mod_input driverpageab"
+                          #PASSWORD="ngModel" placeholder="* Password" name="password" [(ngModel)]='password' [ngClass]="{ 'is-invalid': f.submitted && PASSWORD.invalid }"
+                          required>
+                        <img src="assets/images/showpassword.png" alt="" style="cursor: pointer;" class="viewPassword"
+                          (click)="showHidePass($event)">
+                      </div>
+
+                      <span *ngIf="PASSWORD.touched && PASSWORD?.errors && PASSWORD?.errors.required || f.submitted && PASSWORD.invalid"
+                        class="span_validation">
+                        Password is required
+                      </span>
+
+                      <span *ngIf="PASSWORD?.errors &&  PASSWORD?.errors.minlength" class="span_validation">
+                        Password Can't be less then 8 character
+                      </span>
+
+
+
+
+
+
+                      <input type="password" class="mod_input" placeholder="Enter Confirm Password" name="confirmPassword"
+                        value="" [(ngModel)]="confirmPassword" minlength="8" #CONFIRMPASSWORD="ngModel"
+                        appConfirmEqualValidator="password" [ngClass]="{ 'is-invalid': f.submitted && CONFIRMPASSWORD.invalid }"
+                        required validateEqual="password">
+
+                      <div class="message-space">
+
+                        <span *ngIf="CONFIRMPASSWORD.touched && CONFIRMPASSWORD?.errors && CONFIRMPASSWORD?.errors.required || f.submitted && CONFIRMPASSWORD.invalid"
+                          class="span_validation">
+                          Confirm Password is required
+                        </span>
+
+                        <span *ngIf="CONFIRMPASSWORD?.errors && CONFIRMPASSWORD?.errors.notEqual" class="span_validation">
+                          Password and Confirm does not match (min 8 character)
+                        </span>
+
+
+                      </div> -->
+
+                      <div class="Input"> 
+               
+                          <input type="text" class="Input-text" placeholder="Phone Number"
+                          name="mobileNumber" #MOBILENO="ngModel"
+                         [(ngModel)]="mobileNumber" 
+                         [ngClass]="{ 'is-invalid': f.submitted && MOBILENO.invalid }"style="margin: 20px 0px"
+                         (keypress)="numberOnly($event)" maxlength="13" minlength="9" required>
+                  
+                         <label for="input" class="Input-label" >Phone Number</label>
+                    
+                        </div>
+
+
+
+                      
+
+                  <div class="message-space">
+
+                      <span *ngIf="MOBILENO.touched && MOBILENO?.errors && MOBILENO?.errors.required || f.submitted && MOBILENO.invalid"  class="span_validation school">
+                          Mobile Number is required!
+                      </span>
+                      <span *ngIf="MOBILENO?.errors && MOBILENO?.errors.maxlength"  class="span_validation school">
+                          Mobile Number can't more then 13 digit
+                      </span>
+                      <span *ngIf=" MOBILENO?.errors && MOBILENO?.errors.minlength"  class="span_validation school">
+                          Mobile Number can't less then 9 and more then 13 digit
+                      </span>
+                  </div>
+
+
+
+                  <div class="Input"> 
+               
+                      <input type="text" class="Input-text" #ADIPDI="ngModel" placeholder="* Tax Id" name="taxId"
+                      [ngClass]="{ 'is-invalid': f.submitted && ADIPDI.invalid }"
+                      style="margin: 20px 0px" [(ngModel)]='details.taxId'
+                      required>
+              
+                     <label for="input" class="Input-label" >* Tax Id</label>
+                
+                    </div>
+                  
+                      <span *ngIf="ADIPDI.touched && ADIPDI.errors?.required || f.submitted && ADIPDI.invalid" class="span_validation school">
+                        Tax Id is required
+                      </span>
+
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6 ">
+                    <h4 class="schl">Address Information</h4>
+
+
+                    <div class="Input"> 
+               
+                        <select class="custom-select d-block w-100 Input-text" #COUNTRY="ngModel" (change)="findState()"
+                         [(ngModel)]="country"
+                        [ngClass]="{ 'is-invalid': f.submitted && COUNTRY.invalid }" name="country" required>
+                        <option value="" disabled selected>* Select Country </option>
+                        <option *ngFor="let co of countries" [value]="co.value">{{co.name}}</option>
+                      </select>
+                
+                       <label for="input" class="Input-label" *ngIf="country">* Select Country </label>
+                  
+                      </div>
+
+
+                 
+
+                    <span *ngIf="COUNTRY.touched && COUNTRY.errors?.required || f.submitted && COUNTRY.invalid" class="span_validation school">
+                      Country is required
+                    </span>
+
+
+                    <div class="Input"> 
+               
+                        <select class="custom-select d-block w-100 Input-text" #STATE="ngModel" [(ngModel)]="state"
+                         (change)="findCity()"
+                        [ngClass]="{ 'is-invalid': f.submitted && STATE.invalid }" name="state" required>
+                        <option hidden value="" disabled selected>* Select County </option>
+                        <option *ngFor="let state of stateList" [value]="state.value">{{state.name}}</option>
+                      </select>
+                
+                       <label for="input" class="Input-label" *ngIf="state">* Select County </label>
+                  
+                      </div>
+
+              
+
+                    <span *ngIf="STATE.touched && STATE.errors?.required || f.submitted && STATE.invalid" class="span_validation school">
+                      Countyis required
+                    </span>
+
+
+                    <div class="Input"> 
+               
+                        <select class="custom-select d-block w-100 Input-text" #CITY="ngModel" [(ngModel)]="city" [ngClass]="{ 'is-invalid': f.submitted && CITY.invalid }"
+                        required name="city">
+                        <option hidden value="" disabled selected>* Select City </option>
+                        <option *ngFor="let city of cityList" [value]="city.value">{{city.name}}</option>
+                      </select>
+                
+                       <label for="input" class="Input-label" *ngIf="city">* Select City </label>
+                  
+                      </div>
+
+              
+
+                    <span *ngIf="CITY.touched && CITY.errors?.required || f.submitted && CITY.invalid" class="span_validation school">
+                      City is required
+                    </span>
+
+                    <div class="Input"> 
+               
+                        <input type="text" class="Input-text"
+                        placeholder="* Postcode" name="pinCode"
+                         #PINCODE="ngModel" style="margin: 20px 0px"
+                         (keypress)="omit_special_char($event)"
+                        required maxlength="8" [ngClass]="{ 'is-invalid': f.submitted && PINCODE.invalid }" 
+                         [(ngModel)]="pinCode">
+                
+                       <label for="input" class="Input-label" >* Postcode </label>
+                  
+                      </div>
+
+
+                   
+                    <span *ngIf="PINCODE.touched && PINCODE.errors?.required || f.submitted && PINCODE.invalid" class="span_validation school">
+                      Postcode is required
+                    </span>
+
+
+                    <div class="Input"> 
+               
+                        <input type="text" class="Input-text" #ADDRESSONE style="margin: 20px 0px"
+                        placeholder="* Permanent Address"
+                         [ngClass]="{ 'is-invalid': f.submitted && ADDRESSONE.invalid }"
+                        name="addressLineOne" [(ngModel)]="addressLineOne" required>
+                
+                       <label for="input" class="Input-label" >* Permanent Address</label>
+                  
+                      </div>
+
+           
+                    <span *ngIf="ADDRESSONE.touched && ADDRESSONE.errors?.required || f.submitted && ADDRESSONE.invalid"
+                      class="span_validation school">
+                      Address is required
+                    </span>
+
+                  </div>
+
+                  <div class="col-md-6" *ngIf="isUpdatePage">
+                    <h4 class="schl">Bank Detail Information</h4>
+
+
+
+                    <div class="Input"> 
+               
+                        <input type="text" class="Input-text"
+                         placeholder="* Bank Name" name="bankName"
+                         value="" #BANKNAME="ngModel" style="margin: 20px 0px"
+                        [(ngModel)]="bankName" [ngClass]="{ 'is-invalid': f.submitted && BANKNAME.invalid }" >
+                
+                       <label for="input" class="Input-label" >* Bank Name</label>
+                  
+                      </div>
+
+
+        
+                    <!-- <span *ngIf="BANKNAME.touched && BANKNAME.errors?.required || f.submitted && BANKNAME.invalid"
+                      class="span_validation">
+                      Bank Name is required
+                    </span> -->
+
+
+
+
+                    <div class="Input"> 
+               
+                        <input type="text" class="Input-text" 
+                        placeholder="* Account number" name="accountNumber"
+                         value="" style="margin: 20px 0px"
+                        #ACCOUNTNO="ngModel" [(ngModel)]="accountNumber" [ngClass]="{ 'is-invalid': f.submitted && ACCOUNTNO.invalid }"
+                        >
+                
+                       <label for="input" class="Input-label" >* Account number</label>
+                  
+                      </div>
+
+                  
+                    <!-- <span *ngIf="ACCOUNTNO.touched && ACCOUNTNO.errors?.required || f.submitted && ACCOUNTNO.invalid"
+                      class="span_validation">
+                      Account Number is required
+                    </span> -->
+                    <div class="Input"> 
+               
+                        <input type="text" class="Input-text"
+                        style="margin: 20px 0px" placeholder="* IFSC Code" name="IFSCCode" #IFSC="ngModel"
+                        [(ngModel)]="IFSCCode" [ngClass]="{ 'is-invalid': f.submitted && IFSC.invalid }" >
+                
+                       <label for="input" class="Input-label" >* IFSC Code</label>
+                  
+                      </div>
+                
+                    <!-- <span *ngIf="IFSC.touched && IFSC.errors?.required || f.submitted && IFSC.invalid" class="span_validation">
+                      IFSC is required
+                    </span> -->
+                    <div class="Input"> 
+               
+                        <input type="text" class="Input-text"
+                        style="margin: 20px 0px" placeholder="* Branch Name" name="branchName" #BRANCHNAME="ngModel"
+                        [(ngModel)]="branchName" [ngClass]="{ 'is-invalid': f.submitted && BRANCHNAME.invalid }" >
+                
+                       <label for="input" class="Input-label" >* Branch Name</label>
+                  
+                      </div>
+                   
+                    <!-- <span *ngIf="BRANCHNAME.touched && BRANCHNAME.errors?.required || f.submitted && BRANCHNAME.invalid"
+                      class="span_validation">
+                      BranchName is required
+                    </span> -->
+
+
+
+                  </div>
+
+                  <div class="col-md-6 ">
+                    <h4 class="schl">Contact Person Information</h4>
+                    <div class="Input"> 
+               
+                        <input type="text" class="Input-text" placeholder="* Name"
+                        name="contactPersonName" #cName="ngModel" style="margin: 20px 0px"
+                        (keypress)="omit_special_char($event)"
+                        (keypress)=" charOnly($event)"  pattern="^[a-zA-Z ]*$"
+                         [ngClass]="{ 'is-invalid': f.submitted && cName.invalid }" 
+                         [(ngModel)]="details.contactPersonName"
+                         required>
+                
+                       <label for="input" class="Input-label" >* Name</label>
+                  
+                      </div>
+
+                 
+                    <span *ngIf="cName.touched && cName.errors?.required || f.submitted && cName.invalid" class="span_validation school">
+                      Contact Person Name is required
+                    </span>
+
+
+                    <div class="Input"> 
+               
+                        <input type="email" class="Input-text"
+                        style="margin: 20px 0px" placeholder="* Email" name="contactPersonEmail" #CEMAIL="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && CEMAIL.invalid }" [(ngModel)]="details.contactPersonEmail"
+                        required>
+                
+                       <label for="input" class="Input-label" >* Email</label>
+                  
+                      </div>
+
+
+                   
+                    <span *ngIf="CEMAIL.touched && CEMAIL.errors?.required || f.submitted && CEMAIL.invalid" class="span_validation school">
+                      Contact Person Email is required
+                    </span>
+                    <div class="Input"> 
+               
+                        <input type="text" class="Input-text" 
+                        style="margin: 20px 0px" placeholder="* Phone Number" name="contactPersonMobileNumber"
+                      #CMOBILE="ngModel" [(ngModel)]="details.contactPersonMobileNumber" (keypress)="numberOnly($event)"
+                      maxlength="10" required>
+                
+                       <label for="input" class="Input-label" >* Phone Number</label>
+                  
+                      </div>
+                   
+                    <span *ngIf="CMOBILE.touched && CMOBILE.errors?.required || f.submitted && CMOBILE.invalid" class="span_validation school">
+                      contact Person MobileNumber is required
+                    </span>
+                  </div>
+
+                </div>
+                <!-- <input type="submit" name=""  value="Submit" class="loggin_pop sign_page_sub"> -->
+                <button type="submit" name="" value="Submit" class="loggin_pop sign_page_sub">{{btnTitle}}</button>
+
+              </form>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Button trigger modal -->
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Buddies</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+
+
+          <!-- <div class="ll_wrapper">
+            <input type="text" class="mod_input" placeholder="Search companions" name="Search" value="" (input)="searchCompanions($event.target.value)">
+  
+            <div *ngFor="let item of final" class="compa_list">
+              <div class="row" style="margin: 0px;">
+                <div class="col-md-10">
+                
+                  <div *ngIf="item.profilePictureUrl">
+                    <img src="{{picUrl}}{{item.profilePictureUrl}}" class="pp_up" alt=""> {{item.firstName}}
+  
+                  </div>
+  
+                  <div *ngIf="!item.profilePictureUrl">
+                    <img src="assets/images/driver.png" class="pp_up" alt=""> {{item.firstName}}
+  
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <button class="add btn btn-success" (click)="addBuddies(item._id)" data-dismiss="modal">+</button>
+                </div>
+  
+              </div>
+  
+  
+            </div>
+          </div> -->
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,181 @@
+
+
+
+<div class="container" id='top'>
+  <a routerLink="/master"  class="previous round"  title="Previous Page">&#8249;</a>
+ 
+
+  <div class="row mt-4" style="margin:2em 0 0 0 !important">
+
+    <div class="col-sm-9 col-md-6 col-lg-8" style="text-align: right">
+
+   
+    </div>
+
+  </div>
+  <div class="col-md-2" >
+    <button class="btn btn-default add_btn" id="btn_add" (click)="goToAddSection()">Add</button>
+
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6" >
+      <div *ngFor="let item of attributeList | paginate: {  itemsPerPage: 10, currentPage: p,totalItems: total } ;let i = index ">
+        <div class="row cust-card cust-card-wrap mt-4">
+         
+          <div class="col-lg-12 card-txt">
+            <b>Name</b>
+            <div class="itemQuantity"> {{item.name ? item.name : "NA" }} </div>
+
+          </div>
+
+          <div class="col-lg-12 card-txt">
+            <b>Discription</b>
+            <div class="itemQuantity">{{item.description ? item.description : "NA" }}</div>
+          </div>
+
+    
+
+
+          <button class="edit-btn-style fixed-edit-btn"  (click)="goToUpdateSection(item._id,i )" >
+              <i class="fa">Edit</i>
+            </button> 
+            <div class="disableBtnPosition">
+              <input (click) ="disableItem('Disable',item)" type="button" [class]="setClass(item)" [title]="isVerified(item)" [value]="isVerified(item)">
+        
+             </div>
+        
+        </div>
+      </div>
+      <br>
+      <pagination-controls  *ngIf="!noData"
+      (pageChange)="paginationForAttribute($event)" ></pagination-controls>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 " *ngIf="addPage">
+        <b class="formTitle">{{pageHeader}}</b>
+      <div>
+        <form  class="pop_met" #f="ngForm" novalidate (ngSubmit)="f.form.valid && onSubmit()" name="form" >
+          
+          <!-- <div class="inputWrap">
+               
+                <input type="text"  class="mod_input mod_input2"
+                placeholder="Name" name="name"
+                #attribName="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && attribName.invalid }" required 
+                [(ngModel)]='name'>
+                                          
+                <span *ngIf="attribName.touched && attribName ?.errors && attribName?.errors.required || f.submitted && attribName.invalid" class="span_validation no-top-margin" >
+                  Attribute Name is required
+                  </span>
+    
+              </div> -->
+
+
+   <div class="inputWrap">
+              <div class="Input"> 
+                <input type="text"  class="Input-text"
+                placeholder="Name" name="name"
+                #attribName="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && attribName.invalid }" required 
+                [(ngModel)]='name'>
+  
+                <label for="input" class="Input-label" >Name</label>
+    
+             </div>
+              
+
+             <span *ngIf="attribName.touched && attribName ?.errors && attribName?.errors.required || f.submitted && attribName.invalid" class="span_validation no-top-margin" >
+              Attribute Name is required
+              </span>
+
+   </div>
+
+
+          
+              <div class="inputWrap">
+              
+                
+                <div class="Input" style="margin-top: 10px;"> 
+                  <input type="text" class="Input-text"
+                   placeholder="Discription" name="discription" 
+                   [(ngModel)]='description'>
+
+    
+                  <label for="input" class="Input-label" >Discription</label>
+      
+               </div>
+
+
+
+             
+            </div>          
+         
+              <button class="loggin_pop sign_page_sub">Submit</button>
+        
+        </form>
+
+      
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-6 col-lg-6 "  *ngIf="updatePage" >
+
+
+        <div id="update1">
+            <form action="" method="" id="updateForm" class="pop_met" #f="ngForm"  (ngSubmit)="f.form.valid && onSubmit()">
+               
+              <div class="text-right"  style="margin-right:8px" >
+                <i class="fa fa-check verifyCheck" *ngIf="labelName == 'Enabled'"></i>
+                <i class="fa fa-times verifyCheck" *ngIf="labelName == 'Disabled'"></i>
+                 <label for="disable" class="disableEnablePlaceHolder" [(ngModel)]="labelName" name="labelName" >{{labelName}}</label>
+               
+              </div>
+
+            
+         
+              <b class="formTitle">{{pageHeader}}</b>
+
+
+          <div class="inputWrap">
+            
+            <input type="text"  class="Input-text"
+            placeholder="Name" name="name"
+            #attribName="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && attribName.invalid }" required 
+            [(ngModel)]='name'>
+                
+            
+            <label for="input" class="Input-label" >Name</label>
+
+
+            <span *ngIf="attribName.touched && attribName?.errors && attribName?.errors.required || f.submitted && attribName.invalid" class="span_validation no-top-margin" >
+              Attribute Name is required
+              </span>
+
+          </div>
+
+
+          <div class="inputWrap">
+           
+          <input type="text" class="Input-text" style="margin-top:10px"
+          placeholder="Discription" name="discription"
+           [(ngModel)]='description'>
+
+           <label for="input" class="Input-label" >Discription</label>
+
+          </div>
+         
+        
+          <button class="loggin_pop sign_page_sub">Update</button>  
+        </form>
+        </div>
+      </div>
+  </div>
+
+</div>
+
+<div>
+  <div id="background" *ngIf="noData">
+    <p id="bg-text">No Attribute found</p>
+  </div>
+</div>

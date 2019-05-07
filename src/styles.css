@@ -1,0 +1,746 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+/* *{
+    word-break: break-all;
+} */
+input.mod_input {
+    display: block;
+    border: none;
+    margin: 20px 0px;
+    border: 1px solid #c2c2c2;
+    border-radius: 7px;
+    padding: 10px;
+    padding-left: 23px;
+        outline: none;
+    width: 100%;
+    color: #555555;
+}
+
+.loggin_btn {
+    display: block;
+    width: 72%;
+    background: #F9A11B;
+    border: none;
+    font-family: 'Cabin', sans-serif;
+    color: white;
+    border-radius: 7px;
+    padding: 10px 0px;
+    text-align: center;
+    margin: 20px auto;
+    cursor: pointer;
+    
+}
+.inputWrap {
+    padding-bottom: 15px;
+     position: relative;
+}
+.mod_input2{
+    margin: 0px;
+}
+
+/* img.photo_upload {
+    height: 130px;
+}
+.photo_upload:hover .camera {
+    display: block;
+}
+
+.imf_connt1:hover .photo_upload {
+    opacity: 0.5;
+    background: white;
+}
+
+img.photo_upload {
+  
+    height: 130px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: fill;
+    width: 130px;
+}
+
+
+button.browse.btn.btn-primary {
+    background: #F9A11B !important;
+    border: 1px solid #F9A11B !important;
+    border-radius: 5px;
+    outline: none !important;
+    margin-right: -2px;
+}
+button.browse.btn.btn-primary:focus{
+  box-shadow: none;
+}
+
+.validation-grids .btn-primary {
+    font-size: 0.8em;
+}
+.modal-grids button.btn.btn-primary {
+    font-size: 0.9em;
+}
+.modal-grids button.btn.btn-primary {
+    background-color: #e94e02;
+    font-size: 1em;
+    color: #fff;
+	border-color: #e94e02;
+	outline:none;
+	border-radius: 3px;
+}
+
+.bottom .btn-primary {
+    margin: 0;
+} */
+
+.date_title {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+img.calen_icon {
+    height: 17px;
+    vertical-align: initial;
+    margin-left: 5px;
+}
+.date_pick_con {
+    overflow: hidden;
+    clear: both;
+}
+.input-group.date.date_div {
+    width: 200px;
+    float: left;
+}
+.amnt {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.range-slider {
+    position: relative;
+    top: 0px;
+    clear: both;
+}
+span.value_cont {
+    display: flex;
+    justify-content: space-between;
+}
+input.anum1 {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    min-width: 70px;
+    -webkit-appearance: none;
+}
+button.btn.btn-primary.uploo {
+    background: #F9A11B;
+    border: 1px solid #F9A11B;
+}
+.no-padding {
+    padding: 0px;
+}
+.invoice_con {
+    box-shadow: -1px 3px 11px 3px #cecece;
+    border-radius: 9px;
+}
+img.rect {
+    width: 100%;
+    height: 186px;
+}
+.butt_wrapp5 {
+    margin-top: 66px;
+    text-align: center;
+}
+.dd_cover {
+    display: inline-block;
+    width: 250px; display: block;
+    border: none;
+    margin: 20px 0px;
+    border: 1px solid #c2c2c2;
+    border-radius: 7px;
+    padding: 10px;
+    padding-left: 23px;
+        outline: none;
+    width: 100%;
+    color: #555555;
+    vertical-align: middle;
+}
+img.icco1 {
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.app_wrap #map {
+    width: 100%;
+    margin-bottom: 10px;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+.app_wrap {
+    box-shadow: 0 0 6px 5px #dadada;
+    border-radius: 5px;
+   padding-bottom: 15px;
+   margin-bottom: 15px;
+}
+.time_wrap {
+    padding-left: 9px;
+    margin: 10px 0px;
+}
+.date_title11 {
+    display: flex;
+    justify-content: space-around;
+}
+.mt6{
+  margin-top: 6px;
+}
+.edit_driver {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 14px;
+    color: #525252;
+}
+
+.imf_connt1 {
+    margin-bottom: 35px;
+    display: inline-block;
+    position: relative;
+    margin-left: 15px;
+}
+.camera {
+    height: 30px;
+    /* display: none; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    cursor: pointer;
+    transform: translate(-50%,-50%);
+}
+.photo_upload:hover .camera {
+    display: block;
+}
+input.fileControl.input_diver_img {
+    display: none;
+}
+.imf_connt1:hover .photo_upload {
+    opacity: 0.5;
+    background: white;
+}
+.forget {
+    cursor: pointer;
+    color: #f6a11c;
+    display: inline;
+}
+.forget:hover {
+    color: #ffc05d;
+   
+}
+.map_cover {
+    height: 200px;
+}
+div#map {
+    min-height: 100%;
+}
+
+img.photo_upload {
+  
+    height: 130px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: fill;
+    width: 130px;
+}
+
+div#sign_upp {
+    box-shadow: 0px 0px 9px 4px #2b2b2be8;
+    min-width: 400px;
+    color: #555555;
+    padding: 26px 33px;
+    border-radius: 10px;
+}
+div#sign_upp .mod_input {
+    margin: 40px 0px;
+    padding: 5px 10px;
+    font-size: 14px;
+   
+}
+
+button.fancybox-button.fancybox-close-small svg {
+    border: 2px solid #0e0e0e;
+    border-radius: 50%;
+    color: #0e0e0e;
+}
+.container_chart {
+    width: 90%;
+    margin: auto;
+}
+
+.compa_list[_ngcontent-c2] {
+    margin-top: -22px;
+    border: 1px solid #b2b2b2;
+    width: 100%;
+    padding: 6px;
+    cursor: pointer;
+    box-shadow: 0 0 2px #bababa;
+    margin-bottom: 25px;
+    background: #f9f9f9;
+}
+img.pp_up {
+    margin-right: 15px;
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.ad_budd{
+    background: #F9A11B;
+    border: 1px solid #F9A11B;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 15px;
+}
+img.ad_buddy_img {
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+.bud_wrap {
+    display: inline-block;
+    position: relative;
+}
+img.ad_cross {
+    height: 12px;
+    position: absolute;
+    right: 0px;
+}
+ul.child_driver {
+    padding-left: 37%;
+    margin-top: 5px;
+}
+button.btn.btn-primary.add_dvr {
+    background: #f02901;
+    border-color: #f02901;
+}
+.sign_page_sub {
+    max-width: 300px;
+    margin-top: 50px;
+}
+.loggin_pop {
+    display: block;
+    width: 72%;
+    background: #F9A11B;
+    border: none;
+    font-family: 'Cabin', sans-serif;
+    color: white;
+    border-radius: 7px;
+    padding: 10px 0px;
+    text-align: center;
+    margin: 20px auto;
+    cursor: pointer
+}
+
+select[_ngcontent-c2] {
+    display: block;
+    border: none;
+    margin: 20px 0px;
+    border: 1px solid #c2c2c2;
+    border-radius: 7px;
+    padding: 10px;
+    padding-left: 23px;
+    outline: none;
+    width: 100%;
+    color: #555555;
+    background: white;
+    text-align: left;
+}
+.compa_list[_ngcontent-c2] {
+    margin-top: -22px;
+    border: 1px solid #b2b2b2;
+    width: 100%;
+    padding: 6px;
+    cursor: pointer;
+    box-shadow: 0 0 2px #bababa;
+    margin-bottom: 25px;
+    background: #f9f9f9;
+}
+.custom-select:focus {
+    border-color: none !important; 
+    outline: none;
+    box-shadow: none
+}
+.custom-select{
+    display: block;
+    width: 100%;
+    height: unset;
+    padding: 10px;
+    color: #495057;
+    /* background: #fff; */
+    background-size: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-left: 23px;
+}
+.input-group.date.date_div {
+    width: 200px;
+    float: left;
+}
+.dd_cover {
+    display: inline-block;
+    width: 250px;
+    vertical-align: middle;
+}
+span.span_validation {
+    color: #f02901;
+    margin-top: -18px;
+    font-size: 11px;
+    display: block;
+    margin-bottom: -18px;
+}
+
+
+/* User Agent CSS Fix */
+
+:focus{
+    outline: #555 auto 0px !important;
+    box-shadow: none !important;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #cdd4da;
+    outline: 0;
+    box-shadow: none;
+}
+
+.custom-select:focus {
+    border-color: #cdd4da;
+    outline: 0;
+    box-shadow: none;
+}
+.edit_driver,.nav-link{
+    cursor: pointer;
+}
+.card-txt>div{
+cursor: default;
+}
+
+
+/* The animaterContainer */
+.animaterContainer {
+    display: inline;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.animaterContainer.disableCheck {
+cursor: default;
+}
+.animaterContainer:hover {
+    cursor: default;
+    
+
+}
+
+/* .animaterContainer.disableCheck:hover input ~ .checkmark {
+    background-color: #eee;
+}
+.animaterContainer.disableCheck input:checked ~ .checkmark {
+    background-color: #2196f3;
+} */
+
+.edit-btn-style{
+    cursor: pointer;
+}
+
+/* Hide the browser's default checkbox */
+.animaterContainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.animaterContainer:hover input:checked ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.animaterContainer input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.animaterContainer input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.animaterContainer .checkmark:after {
+    left: 8px;
+    top: 5px;
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.cust-card{
+    min-height: 130px;
+    padding: 30px 20px;
+}
+
+.animaterContainer {
+    display: inline;
+}
+
+.roundback {
+    background-color: #908484;
+    color: #f2f2f2;
+    background-color: #ddd;
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+}
+.no-margin {
+    margin: 0px !important;
+}
+.no-top-margin {
+    margin-top: 0px !important;
+}
+.itemQuantity {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 11px;
+}
+.cust-card-wrap{
+    position: relative;
+}
+label.animaterContainer.fixedDisableCheck {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.card-txt-wrap{
+    text-align: right;
+}
+button.edit-btn-style.fixed-edit-btn {
+    position: absolute;
+    bottom: 16px;
+    right: 90px;
+}
+
+.disableBtn {
+    border: 1px solid red;
+    background: transparent;
+    color:red;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.enableBtn {
+    border: 1px solid green;
+    background: transparent;
+    color: green;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.disableBtnPosition {
+    right: 16px;
+    position: absolute;
+    bottom: 16px; 
+    cursor: pointer
+}
+.enableBtn:hover{
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+.disableBtn:hover{
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+.paddingAll{
+    padding: 5px;
+
+}
+
+
+
+
+
+.form-wrapper-outer{
+    padding: 40px;
+    border-radius: 8px;
+    margin: auto;
+    width: 460px;
+    border: 1px solid #DADCE0;
+    margin-top: 7%;
+}
+
+.form-wrapper-outer .form-logo{
+    margin: 0px auto 15px;
+    width: 100px;
+}
+
+.form-wrapper-outer .form-logo img{
+    width: 100%;
+}
+
+.form-greeting{
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.form-button{
+    text-align: right;
+}
+
+.field-wrapper{
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.field-wrapper input{
+    border: 1px solid #DADCE0;
+    padding: 15px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.field-wrapper .field-placeholder{
+    pointer-events: none;
+    font-size: 16px;
+    position: absolute;
+    /* background: #fff; */
+    bottom: 17px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #80868b;
+    left: 8px;
+    padding: 0 8px;
+    -webkit-transition: transform 150ms cubic-bezier(0.4,0,0.2,1),opacity 150ms cubic-bezier(0.4,0,0.2,1);
+    transition: transform 150ms cubic-bezier(0.4,0,0.2,1),opacity 150ms cubic-bezier(0.4,0,0.2,1);
+    z-index: 1;
+
+    text-align: left;
+    width: 100%;
+}        
+
+.field-wrapper .field-placeholder span{
+    background: #ffffff;
+    padding: 0px 8px;
+    pointer-events: none
+}
+
+.field-wrapper input:not([disabled]):focus~.field-placeholder
+{
+    color:#1A73E8;
+}
+
+.field-wrapper input:not([disabled]):focus~.field-placeholder,
+.field-wrapper.hasValue input:not([disabled])~.field-placeholder
+{
+    -webkit-transform: scale(.75) translateY(-39px) translateX(-60px);
+    transform: scale(.75) translateY(-39px) translateX(-60px);
+    
+}	
+
+.float_label{
+    font-family: sans-serif;
+    color: #524d4d;
+    font-size: 16px;
+}
+
+
+
+.Input {
+
+    position: relative;
+  }
+  
+  .Input-text {
+
+
+
+     display: block;
+     margin: 0px;
+     border: 1px solid #c2c2c2;
+     border-radius: 7px;
+     padding: 10px;
+     padding-left: 23px;
+     outline: none;
+     width: 100%;
+     color: #555555;
+     display: block;
+     margin: 0;
+     width: 100%;
+ 
+
+  }
+  
+
+  
+  .Input-label {
+ 
+     display: block;
+    position: absolute;
+    opacity: 0;
+    top: -4px;
+    color: #1b72e8;
+    font-size: 14px;
+    margin-left: 20px;
+    margin-top: -5px;
+    background-color: white;
+ 
+  }
+  
+  .Input-text:placeholder-shown + .Input-label {
+
+    visibility: hidden;
+    z-index: -1;
+  }
+  
+  .Input-text:not(:placeholder-shown) + .Input-label,
+  .Input-text:focus:not(:placeholder-shown) + .Input-label {
+
+    visibility: visible;
+    z-index: 1;
+    opacity: 1;
+
+  }

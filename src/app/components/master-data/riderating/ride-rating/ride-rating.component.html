@@ -1,0 +1,393 @@
+<div class="container" id='top'>
+  <a routerLink="/master" class="previous round" title="Previous Page">&#8249;</a>
+  <div class="row mt-4" style="margin:2em 0 0 0 !important">
+
+    <div class="col-sm-9 col-md-6 col-lg-8" style="text-align: right">
+
+    </div>
+
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-default add_btn" id="btn_add" (click)="goToAddSection()">Add</button>
+
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6">
+      <div *ngFor="let item of rideRateList | paginate: {id:'rideRate', itemsPerPage: 10, currentPage: pRideRate,totalItems: total }; let i = index  ">
+        <div class="row cust-card cust-card-wrap mt-4">
+
+
+          <div class="col-lg-12 card-txt" *ngIf="item.isGeneric">
+            <b>Who</b>
+            <div class="itemQuantity"> Generic</div>
+
+          </div>
+
+
+          <div class="col-lg-12 card-txt" *ngIf="!item.isGeneric && item.isSchool">
+            <b>Who</b>
+            <div class="itemQuantity"> {{item.who ? item.who.schoolName : "NA"}}</div>
+       
+          </div>
+
+          <div class="col-lg-12 card-txt" *ngIf="!item.isGeneric && !item.isSchool">
+            <b>Who</b>
+            <div class="itemQuantity">  {{item.who ? item.who.firstName :"NA"}}</div>
+       
+          </div>
+         
+
+          <div class="col-lg-12 card-txt" *ngIf="item.isSchool">
+            <b>School : True</b>
+          </div>
+
+
+          <div class="col-lg-12 card-txt" *ngIf="!item.isSchool">
+            <b>School : False</b>
+          </div>
+
+
+          <!-- <div class="col-lg-12 card-txt">
+            <b>Tax (%) :</b>
+            <div class="itemQuantity"> {{item ? item.taxId.taxPercentage : "NA"}}</div>
+          </div>  -->
+
+          <div class="col-lg-12 card-txt">
+            <b>Price :</b>
+            <div class="itemQuantity"> {{item ? item.price : "NA"}}</div>
+          </div>
+          <div class="col-lg-12 card-txt">
+            <b>Tax :</b>
+            <div class="itemQuantity"> {{item.taxId ? item.taxId .taxPercentage: "NA"}}</div>
+          </div>
+
+      
+
+          <button class="edit-btn-style fixed-edit-btn" (click)="goToUpdateSection(item._id ,i)">
+            <i class="fa">Edit</i>
+          </button>
+
+          <div class="disableBtnPosition">
+            <input (click) ="disableItem('Disable',item)" type="button" [class]="setClass(item)" [title]="isVerified(item)" [value]="isVerified(item)">
+      
+           </div>
+
+        </div>
+      </div>
+      <br>
+      <pagination-controls id="rideRate" (pageChange)="paginationForRideRate($event)"></pagination-controls>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 " *ngIf="addPage">
+      <b class="formTitle">{{pageHeader}}</b>
+      <div>
+
+        <form class="pop_met" #f="ngForm" novalidate (ngSubmit)="f.form.valid && onSubmit()" name="form">
+
+          <input type="radio" name="same" value="school" class="radio" data-toggle="modal" data-target="#myModal2" (change)="selectUserType('school')"> School
+
+          <input type="radio" name="same" class="radio" value="individual" data-toggle="modal" data-target="#myModal11" (change)="selectUserType('individual')"> Individual
+
+          <div class="Input">
+            
+
+            <input type="text" class="mod_input Input-text" disabled placeholder="Name"
+            name="showUserName" #attribName="ngModel" 
+            [ngClass]="{ 'is-invalid': f.submitted && attribName.invalid }"
+             required [(ngModel)]='showUserName'>
+
+            <label for="input" class="Input-label" >Name</label>
+          </div>
+         
+
+          <div class="Input">
+            
+
+            <input type="text" class="mod_input Input-text" 
+            placeholder="price" name="name" #attribName="ngModel" 
+            [ngClass]="{ 'is-invalid': f.submitted && attribName.invalid }"
+            required [(ngModel)]='price'>
+
+            <label for="input" class="Input-label" >price</label>
+          </div>
+        
+
+
+
+          <span *ngIf="attribName.touched && attribName?.errors && attribName?.errors.required || f.submitted && attribName.invalid"
+            class="span_validation">
+            Price is required
+          </span>
+
+
+          <div class="Input">
+            
+
+            <input type="text" class="mod_input Input-text" style="cursor: pointer;" 
+            [ngClass]="{ 'is-invalid': f.submitted && NOOFDAY.invalid }"
+            required #NOOFDAY="ngModel" data-toggle="modal" 
+            data-target="#myModal" placeholder="Tax" name="no_of_day" 
+            [(ngModel)]='tax'>
+
+            <label for="input" class="Input-label" >Tax</label>
+          </div>
+
+          
+
+          <span *ngIf="NOOFDAY.touched && NOOFDAY?.errors && NOOFDAY?.errors.required || f.submitted && NOOFDAY.invalid" class="span_validation">
+            Tax is Requred
+          </span>
+
+
+
+
+
+
+          <button class="loggin_pop sign_page_sub">Submit</button>
+
+        </form>
+
+
+      </div>
+    </div>
+
+
+
+
+
+
+    <div class="col-sm-6 col-md-6 col-lg-6 "  *ngIf="updatePage">
+
+
+        <div>
+            <form action="" method="" id="updateForm" class="pop_met" #f="ngForm"  (ngSubmit)="f.form.valid && onSubmit()">
+               
+              <div class="text-right"  style="margin-right:8px">
+                <i class="fa fa-check verifyCheck" *ngIf="labelName == 'Enabled'"></i>
+                <i class="fa fa-times verifyCheck" *ngIf="labelName == 'Disabled'"></i>
+                 <label for="disable" class="disableEnablePlaceHolder" [(ngModel)]="labelName" name="labelName" >{{labelName}}</label>
+               
+              </div>
+         
+              <b class="formTitle">{{pageHeader}}</b>
+
+
+              <div class="Input">
+            
+
+                <input  type="text" class="mod_input Input-text" placeholder="Name"
+                name="whoName" #attribName="ngModel"  readonly
+                [ngClass]="{ 'is-invalid': f.submitted && attribName.invalid }"
+               required [(ngModel)]='whoName'>
+    
+                <label for="input" class="Input-label" >Name</label>
+              </div>
+
+             
+
+              <div class="Input">
+            
+
+                <input type="text" class="mod_input Input-text" placeholder="price"
+                name="name" #attribName="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && attribName.invalid }"
+               required [(ngModel)]='price'>
+    
+                <label for="input" class="Input-label" >price</label>
+              </div>
+
+             
+  
+  
+  
+            <span *ngIf="attribName.touched && attribName?.errors && attribName?.errors.required || f.submitted && attribName.invalid"
+              class="span_validation">
+              Price is required
+            </span>
+  
+
+
+            <div class="Input">
+            
+
+              <input type="text" class="mod_input Input-text" style="cursor: pointer;"
+              [ngClass]="{ 'is-invalid': f.submitted && NOOFDAY.invalid }"
+             required #NOOFDAY="ngModel" 
+             data-toggle="modal" data-target="#myModal" 
+             placeholder="Tax" name="tax" [(ngModel)]='tax'>
+  
+              <label for="input" class="Input-label" >Tax</label>
+            </div>
+
+
+
+          <span *ngIf="NOOFDAY.touched && NOOFDAY?.errors && NOOFDAY?.errors.required || f.submitted && NOOFDAY.invalid" class="span_validation">
+            tax is Requred
+          </span>
+         
+        
+          <button class="loggin_pop sign_page_sub">Update</button>  
+        </form>
+        </div>
+      </div>
+
+
+
+
+
+  </div>
+
+</div>
+
+
+ <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Tax List</h4>
+      </div>
+
+      <div class="modal-body" *ngFor="let item of taxList" data-dismiss="modal" (click)="getTaxId(item._id)">
+        <div class="row tax" style="cursor: pointer;">
+
+
+          <div class="col-lg-6">
+            <b>Tax For</b>
+            <div> {{item.taxFor}}</div>
+          </div>
+
+
+          <div class="col-lg-6">
+            <b>Tax Percentage</b>
+            <div>{{item.taxPercentage}}</div>
+          </div>
+
+
+
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+
+
+<div>
+  <div id="background" *ngIf="noData">
+    <p id="bg-text">No Ride Rate found</p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="myModal11" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+  
+        <div class="form-wrapper">
+  
+          <input type="text" class="mod_input " [(ngModel)]="txtSearch" placeholder="Search" (input)="searchDriverName($event.target.value)"
+            name="" id="">
+
+
+            <div class="forDrivers" *ngIf="drivers.length>0">
+              
+          <div class="search-area">
+            <div class="row  ssitem mb-2" *ngFor="let item of drivers | paginate: { id:'driver11', itemsPerPage: 10, currentPage: pDriver,totalItems: totalDriverPage }"
+              data-dismiss="modal" (click)="getDriverNamePlaceHolder(item.firstName,item._id)">
+           
+              <div class="col-3">
+                <img [src]=" item.profilePictureUrl ? picUrl+ item.profilePictureUrl :   'assets/images/userPlaceholder.png'"
+                  (error)="errorHandler($event)" class="photo_upload" alt="">
+  
+              </div>
+              <div class="col-9 search-text">
+                {{item.firstName + " "+item.lastName}}
+                <br> {{item.email ? item.email : "NA"}}
+              </div>
+            </div>
+  
+          </div>
+            </div>
+
+
+          <div *ngIf="drivers.length <= 0 ">
+            <p id="bg-text">N0 Record..!</p>
+          </div>
+  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+  
+          <div class="pagination" class="my-pagination">
+            <pagination-controls id="driver11" maxSize="5" (pageChange)="paginationFordrivers($event)"></pagination-controls>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+  
+        <div class="form-wrapper">
+  
+          <input type="text" class="mod_input " [(ngModel)]="txtSearch" placeholder="Search" (input)="searchSchoolName($event.target.value)"
+            name="" id="">
+
+
+            <div div class="forSchools" *ngIf="schools.length>0">
+              
+          <div class="search-area">
+            <div class="row  ssitem mb-2" *ngFor="let item of schools | paginate: { id:'school', itemsPerPage: 10, currentPage: pSchool,totalItems: totalSchoolPages }"
+              data-dismiss="modal" (click)="getDriverNamePlaceHolder(item.school.schoolName,item.school._id)">
+           
+              <div class="col-3">
+                <img [src]=" item.profilePictureUrl ? picUrl+ item.profilePictureUrl :   'assets/images/userPlaceholder.png'"
+                  (error)="errorHandler($event)" class="photo_upload" alt="">
+  
+              </div>
+              <div class="col-9 search-text">
+                {{item.school ? item.school.schoolName : "NA"}}
+                <br> 
+              </div>
+            </div>
+  
+          </div>
+            </div>
+
+
+          <div *ngIf="schools.length <= 0 ">
+            <p id="bg-text">N0 Record..!</p>
+          </div>
+  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+  
+          <div class="pagination" class="my-pagination">
+            <pagination-controls id='school' maxSize="5" (pageChange)="paginationForSchools($event)"></pagination-controls>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div> 

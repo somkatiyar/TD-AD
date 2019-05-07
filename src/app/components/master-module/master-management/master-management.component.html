@@ -1,0 +1,123 @@
+<div class="container">
+
+  <div class="row mt-4" style="margin:2em 0 0 0 !important">
+
+    <div class="col-sm-9 col-md-6 col-lg-8">
+      <div class="row">
+        <div class="col-md-4" style="padding: 0;">
+          <select class="custom-select d-block w-100" (change)="chooseUser()" [(ngModel)]="userType">
+            <option hidden value="all" disabled selected>Please Select </option>
+            <option value="attribute">Attribute </option>
+            <option value="doc_type">Document Type</option>
+            <option value="curriculam">Curriculam </option>
+            <option value="package">Package </option>
+            <option value="slot">Slot</option>
+            <option value="tax">Tax </option>
+            <option value="vechical_type">Vechical Type </option>
+            <option value="country">Country </option>
+            <option value="state">State</option>
+            <option value="city">City </option>
+          </select>
+        </div>
+        <div class="col-md-2" *ngIf="showBtn">
+          <button class="btn btn-default add_btn" id="btn_add" (click)="goToAddPage()">Add</button>
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+
+    <div class="col-sm-9 col-md-6 col-lg-8" style="text-align: right">
+
+    
+
+
+    </div>
+
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6" *ngIf="showBtn">
+      <div *ngFor="let item of temp1 | orderBy: order">
+        <div class="row cust-card mt-4">
+
+
+          <div class="col-lg-3 card-txt">
+            <b>Name</b>
+            <div> {{item.name ? item.name : "NA" }} </div>
+
+          </div>
+
+          <div class="col-lg-3 card-txt">
+            <b>Discription</b>
+            <div>{{item.description ? item.description : "NA" }}</div>
+          </div>
+
+          <div class="col-lg-3 card-txt">
+            <b>From Time</b>
+            <div>{{item.fromTime ? item.fromTime : "NA" }}</div>
+          </div>
+
+          <div class="col-lg-3 card-txt">
+            <b>To Time</b>
+            <div>{{item.toTime ? item.toTime : "NA" }}</div>
+          </div>
+
+          <div class="col-lg-12 card-txt" >
+            <button class="edit-btn-style" (click)="masterEdit(item._id )">
+              <i class="fa">Edit</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 "  *ngIf="addPageContent">
+        <b class="formTitle">{{pageHeader}}</b>
+      <div>
+          <form action="" method="" class="pop_met" #myForm="ngForm" (ngSubmit)="create()">
+            
+        <input type="text" *ngIf="isAttribute || isSlot || isDoc_type || isPackage || isCurriculam || isVechical_type || isTax || isContry || isState || isCity" class="mod_input"style="margin-top: 0;" placeholder="Name" name="name" [(ngModel)]='details.name'>
+        <input type="text" *ngIf="isAttribute || isSlot || isDoc_type || isPackage || isCurriculam" class="mod_input" placeholder="Discription" name="discription" [(ngModel)]='details.discription'>
+        
+        <input type="text" *ngIf="isSlot "class="mod_input" placeholder="From Time" name="fromTime" [(ngModel)]='details.fromTime'> 
+        <input type="text" *ngIf="isSlot " class="mod_input" placeholder="To Time" name="toTime" [(ngModel)]='details.toTime'>
+        <input type="text" *ngIf="isPackage "class="mod_input" placeholder="No Of Day" name="no_of_day" [(ngModel)]='details.noOfDay'>
+        <input type="text" *ngIf="isPackage " class="mod_input" placeholder="No Of Lesson" name="no_of_lesson" [(ngModel)]='details.noOflesson'>
+        <input type="text" *ngIf="isPackage "class="mod_input" placeholder="Tax" name="tax" [(ngModel)]='details.tax'>
+        <input type="text" *ngIf="isPackage "class="mod_input" placeholder="Price" name="price" [(ngModel)]='details.price'>
+
+      
+        <button type="submit" name=""  value="Submit" class="loggin_pop sign_page_sub">Submit</button>
+
+      </form>
+      </div>
+    </div>
+
+    <!-- <div class="col-sm-9 col-md-6 col-lg-8"  *ngIf="updatePageContant">
+        <div>
+            <form action="" method="" class="pop_met" #myForm="ngForm" (ngSubmit)="update()">
+                <b>{{pageHeader}}</b>
+          <input type="text" *ngIf="isAttribute || isSlot || isDoc_type || isPackage || isCurriculam || isVechical_type || isTax || isContry || isState || isCity" class="mod_input" placeholder="Name" name="name" [(ngModel)]='details.name'>
+          <input type="text" *ngIf="isAttribute || isSlot || isDoc_type || isPackage || isCurriculam" class="mod_input" placeholder="Discription" name="discription" [(ngModel)]='details.discription'>
+          
+          <input type="text" *ngIf="isSlot "class="mod_input" placeholder="From Time" name="fromTime" [(ngModel)]='details.fromTime'>
+          <input type="text" *ngIf="isSlot " class="mod_input" placeholder="To Time" name="toTime" [(ngModel)]='details.toTime'>
+          <input type="text" *ngIf="isPackage "class="mod_input" placeholder="No Of Day" name="no_of_day" [(ngModel)]='details.noOfDay'>
+          <input type="text" *ngIf="isPackage " class="mod_input" placeholder="No Of Lesson" name="no_of_lesson" [(ngModel)]='details.noOflesson'>
+          <input type="text" *ngIf="isPackage "class="mod_input" placeholder="Tax" name="tax" [(ngModel)]='details.tax'>
+          <input type="text" *ngIf="isPackage "class="mod_input" placeholder="Price" name="price" [(ngModel)]='details.price'>
+  
+        
+          <button type="submit" name=""  value="Submit" class="loggin_pop sign_page_sub">Update</button>
+  
+        </form>
+        </div>
+      </div> -->
+  </div>
+
+</div>

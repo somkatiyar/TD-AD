@@ -1,0 +1,54 @@
+
+
+<div class="row" style="margin:0 !important;">
+        <div class="col-lg-6 col-md-6 col-sm-12 left_div">
+
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 right_div">
+
+                <div class="card-body" >
+                                <!-- <ng4-loading-spinner> </ng4-loading-spinner> -->
+                                
+                                <form action="" novalidate method="" class="pop_met" [formGroup]="myForm" (ngSubmit)="login()" novalidate>
+                               
+                                <img src="assets/images/favicon.ico" alt="" class="login_logo">
+                                
+                                <div class="text-center mb-4 mt-2">
+                                        <strong >ADMINSTRATOR LOGIN</strong>
+                                </div>
+                                <input type="text" class="mod_input" placeholder="Username" formControlName="email" name="email" [(ngModel)]='details.email'>
+                                <div style="min-height: 1.5em !important;">
+                                        <span *ngIf="myForm.get('email').hasError('required') && myForm.get('email').touched ">
+                                                Email is required!
+                                        </span>
+                                </div>
+                                <!-- passwordToggle -->
+                                <div class="passwordImageWrap">
+                                        <input [type]="show ? 'text' : 'password'"  class="mod_input driverpageab" 
+                                        placeholder="password"  formControlName="password" 
+                                        name="password" [(ngModel)]='details.password' >
+                                        <img src="assets/images/showpassword.png" alt="" style="cursor: pointer;" class="viewPassword" (click)="showHidePass()">
+                                </div>
+                                        <!-- <div class="passwordImageWrap">
+                                                <input  [type]="show ? 'text' : 'password'"  
+                                                class="driverpage driverpageab" #PASSWORD="ngModel"
+                                                 placeholder="* Password" name="password" 
+                                                 [(ngModel)]='details.password'
+                                                [ngClass]="{ 'is-invalid': f.submitted && PASSWORD.invalid }" required>
+                                                <img src="assets/images/showpassword.png" alt="" style="cursor: pointer;" class="viewPassword" (click)="showHidePass($event)">
+                                              </div> -->
+
+
+                                <div style="min-height: 1.5em !important;">
+                                        <span *ngIf="myForm.get('password').hasError('required') && myForm.get('password').touched">
+                                                Password is required!
+                                        </span>
+                                </div>
+
+                               
+                                <button  type="submit" name=""  class="loggin_btn" [disabled]="myForm.invalid"> Login </button>
+                                
+                        </form>
+                </div>
+        </div>
+</div>

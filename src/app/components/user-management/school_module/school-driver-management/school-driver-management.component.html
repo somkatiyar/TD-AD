@@ -1,0 +1,226 @@
+<div class="container">
+  <a (click)="goBack()" class=" roundback" title="Previous Page">&#8249;</a>
+</div>
+<div class="diverWrap" style=" margin: 2em auto !important;
+max-width: 1100px;">
+ 
+  <div class="driverSubWrapper1">
+    <label for="schoolName" class="school_name">
+      School Name: {{schoolName ? schoolName : "NA"}}
+    </label>
+    <button class="btn btn-primary add_dvr" (click)="goToAddDriver()">Add Driver</button>
+
+  </div>
+
+
+</div>
+
+
+
+
+
+
+<div class="container" *ngIf=!noData >
+  <div class="row" style="margin: 0;">
+
+    <div class="col-lg-2">
+
+
+
+    </div>
+
+    <div class="col-lg-2 card-txt" (click)="sortList('firstName')">
+      <b>Name
+
+        <span *ngIf="key === 'firstName'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+      </b>
+      <div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-2 card-txt " (click)="sortList('email')">
+      <b>Email
+        <span *ngIf="key === 'email'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+      </b>
+      <div></div>
+    </div>
+
+
+    <div class="col-lg-2 card-txt" (click)="sortList('schoolTouser.schoolName')" *ngIf="isSchoolNameShow">
+
+
+      <b>School Name
+
+        <span *ngIf="key === 'schoolTouser.schoolName'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+
+      </b>
+      <div></div>
+
+
+    </div>
+
+
+
+
+    <div class="col-lg-2 card-txt" (click)="sortList('mobileNumber')">
+      <b>Mobile Number
+        <span *ngIf="key === 'mobileNumber'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+      </b>
+      <div></div>
+    </div>
+    <div class="col-lg-2 card-txt" style="text-align: center;">
+      <div class=" card-txt">
+
+      </div>
+
+
+    </div>
+ 
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+
+  <div class="users" *ngIf="driverList" >
+
+
+
+    <div *ngFor="let item of driverList['userDetail'] | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total } | orderBy: key : reverse ; let i = index">
+
+
+      <div class="row cust-card mt-4">
+
+
+        <div class="col-lg-2">
+
+
+          <img [src]="item.profilePictureUrl ? picUrl+item.profilePictureUrl : 'assets/images/userPlaceholder.png'"
+            (error)="errorHandler($event)" class="card-image">
+
+        </div>
+
+        <div class="col-lg-2 card-txt">
+          <b>Name
+
+
+          </b>
+          <div>
+            {{item["firstName"] ? item["firstName"] : "NA"}}
+          </div>
+
+
+
+        </div>
+
+        <div class="col-lg-2 card-txt ">
+          <b>Email
+
+          </b>
+          <div  class="b">
+            {{item["email"] ? item["email"] : "NA"}}
+          </div>
+
+        </div>
+
+
+
+
+        <div class="col-lg-2 card-txt">
+          <b>Mobile Number
+            <div ng-class="getSortClass(item.mobileNumber )">
+
+            </div>
+          </b>
+          <div >
+            {{item["mobileNumber"] ? item["mobileNumber"] : "NA"}}
+          </div>
+
+
+        </div>
+        <div class="col-lg-2 card-txt" style="text-align: center;">
+          <button class="edit-btn-style"  (click)="goToUpdatePage(item._id)">
+                  <i class="fa">Edit</i>
+                </button>
+               
+          <!-- <i *ngFor="let x of item['userDetail']" class="edit-btn-style" aria-hidden="true" (click)="goToUpdatePage(x._id)">Edit</i> -->
+
+
+
+          <div   style="display:inline-block;"> 
+
+            <div style="display:inline-block;">
+              <button [hidden]="isApproved(item)" class="enableBtn" id="approveBtn" (click)="disableItem('aprove',item)">Approve</button>
+              <input (click)="disableItem('Disable',item)" type="button" [class]="setClass(item)"
+                [hidden]="!isApproved(item)" [title]="isVerified(item)" [value]="isVerified(item)">
+            </div>
+
+            <div class=" card-txt">
+
+            </div>
+          </div>
+
+
+
+
+        </div>
+      </div>
+
+          <!-- <i class="fa fa-check verifyCheck" [hidden]="!isApproved(item)">Verified</i> -->
+
+
+
+    </div>
+
+
+
+
+  </div>
+</div>
+  <pagination-controls *ngIf="!noData" (pageChange)="paginationForDriver($event)" ></pagination-controls>
+
+  <div id="background" *ngIf="noData">
+    <p id="bg-text">No Driver Added </p>
+  </div>

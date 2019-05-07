@@ -1,0 +1,91 @@
+
+.cust-card{
+    box-shadow: 5px 6px 8px #ddd;
+    margin: auto;
+    border-radius: 7px;
+    padding: 20px 6px;
+    border: 1px solid #f7f3f3;
+}
+
+.card-image{
+    margin: 0 auto;
+    padding: 0.5em;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.card-txt{
+    margin: auto 0;
+}
+.cust-card-header{
+display: flex;
+flex-wrap: wrap;
+margin-right: -15px;
+margin-left: -15px;
+margin: top;
+margin-top: 19px;
+margin-bottom: -22px;
+}
+.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+    background-color:orange !important;
+    color: white !important;
+}
+
+.edit-btn-style{
+    border: 1px solid #F9A11B;
+    background: transparent;
+    color: #F9A11B;
+    margin-top: 10px;
+}
+
+.formTitle{
+
+    display: block;
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 10px;
+
+}
+/* .cust-card{
+    box-shadow: 0 0 15px #ddd;
+    box-shadow: 0 0 15px #ddd;
+    margin: auto;
+    border-radius: 7px;    
+    padding: 20px 6px;
+
+} */
+
+.card-image{
+    margin: 0 auto;
+    padding: 0.5em;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.card-txt{
+    margin: auto 0;
+}
+.cust-card-header{
+display: flex;
+flex-wrap: wrap;
+margin-right: -15px;
+margin-left: -15px;
+margin: top;
+margin-top: 19px;
+margin-bottom: -22px;
+}
+.date-picker-style{
+    height: 46px !important;
+    border-radius: 7px 0 0 7px !important; 
+    margin-top: 17px !important;
+}
+
+.date-btn-style{
+    background-color: #f6a11c !important;
+    border-color: #f6a11c !important;
+    color: #fff !important;
+    margin-top: 17px !important;
+}

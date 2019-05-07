@@ -1,0 +1,124 @@
+<div class="container">
+    <a (click)="goBack()" class="previous round back" title="Previous Page">&#8249;</a>
+
+</div>
+<div class="row" style="margin:1em 0 0 0 !important;">
+  <div class="col-lg-6 col-md-6 col-sm-6">
+     <strong>{{'invoiceDetail.paymentstatus' | translate }}: {{invoice && invoice.status && invoice.status == "NOT_PAID" ? "Unpaid" : "Paid"}}</strong> 
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-6">
+    <button class="btn btn-primary add_dvr" (click)="getReceipt()">{{'invoiceDetail.downloadinvoice' | translate }}</button>
+  </div>
+</div>
+
+<div class="m-4">
+  <div class="row">
+      <div class="col text-center" *ngIf="organisation">
+         <strong> {{organisation.name ? organisation.name : 'LURNR'}}</strong>
+        </div>
+  </div>
+
+  <div class="row">
+      <div class="col text-center" *ngIf="organisation">
+        
+          {{organisation.address ? organisation.address : ''}}
+        </div>
+  </div>
+
+  <div class="row">
+      <div class="col text-center" *ngIf="organisation">
+          <strong>{{'invoiceDetail.contactnumber' | translate }}:</strong> {{organisation.contactNumber ? organisation.contactNumber : ''}}
+        </div>
+  </div>
+
+  <div class="row">
+      <div class="col text-center" *ngIf="organisation">
+          <strong>{{'invoiceDetail.email' | translate }}:</strong>  {{organisation.email ? organisation.email : ''}}
+        </div>
+  </div>
+  
+</div>
+
+<div class="ml-4 mr-4 mt-4">
+    <div class="row p-2" style="background-color: #ddd;">
+        <div class="col text-center" *ngIf="organisation">
+           <strong>{{'invoiceDetail.ridedetails' | translate }}</strong>
+        </div>
+    </div>
+</div>    
+
+<div class="ml-5 mr-5 mb-5">
+    <div class="row p-2" style="border-bottom: 1px solid #ddd">
+        <div class="col-1 text-center">
+          <strong> {{'invoiceDetail.sno' | translate }}</strong> 
+        </div>
+        <div class="col-5 text-center">
+            <strong>{{'invoiceDetail.bookingid' | translate }}</strong>
+        </div>
+        <div class="col-3 text-center">
+            <strong>{{'invoiceDetail.ridedate' | translate }}</strong><br>
+        </div>
+        <div class="col-3 text-center">
+            <strong>{{'invoiceDetail.driver' | translate }}</strong><br>
+        </div>
+    </div>
+    <div class="row p-2" *ngFor="let id of invoiceDetails; let i = index">
+        <div class="col-1 text-center">
+          {{i+1}}
+        </div>
+        <div class="col-5 text-center">
+            {{id.bookingId}}
+        </div>
+        <div class="col-3 text-center">
+            {{id.startDateTime | date: 'fullDate'}}
+        </div>
+        <div class="col-3 text-center">
+            {{id.driverId.email}}
+        </div>
+    </div>
+    <div class="row p-2" style="border-top: 1px solid #ddd">
+        <div class="col-1 text-center">
+          
+        </div>
+        <div class="col-5 text-center">
+            
+        </div>
+        <div class="col-3 text-center">
+            <strong>{{'invoiceDetail.taxamount' | translate }}(%):{{invoice && invoice.tax ? invoice.tax : 0}}</strong>
+        </div>
+        <div class="col-3 text-center">
+            <strong>{{'invoiceDetail.totalamount' | translate }}: £{{invoice && invoice.amount ? invoice.amount + invoice.tax : 0}}</strong><br>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="m-4" *ngIf="this.invoice && this.invoice.status == 'NOT_PAID'">
+    <div class="row">
+        <button class="btn btn-outline-secondary detail-btn-style" type="button" style="max-width: 300px;"  data-toggle="modal" data-target="#confirm">
+            {{'invoiceDetail.paynow' | translate }}
+        </button>
+    </div> 
+</div>
+
+<div id="confirm" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="display: block;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{'invoiceDetail.confirmpayment' | translate }}</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{'invoiceDetail.confirmmassage' | translate }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default cust-btn" data-dismiss="modal">{{'invoiceDetail.close' | translate }}</button>
+          <button type="button" class="btn btn-default cust-btn-pay" data-dismiss="modal" (click)="pay()">{{'invoiceDetail.pay' | translate }}</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>

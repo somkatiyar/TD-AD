@@ -1,0 +1,423 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <ul class="nav nav-tabs m-4">
+        <li class="nav-item" (click)="tab = 0">
+          <a class="nav-link" (click)="changePageTitle('Booking History')" [ngClass]="tab == 0 ? 'active': ''">
+            {{'bookingHistory.header.bookinghistory' | translate }}</a>
+        </li>
+        <li class="nav-item" (click)="tab = 1">
+          <a class="nav-link" (click)="changePageTitle('Test Center Booking')" [ngClass]="tab == 1 ? 'active': ''">
+            {{'bookingHistory.header.testcenterbooking' | translate }}</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+  <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="tab == 0">
+    <div class="container">
+
+      <div class="row">
+
+        <div class="container" *ngIf=" isBookingHistoryData">
+          <div class="row">
+
+            <span (click)="sortList('learnerId.firstName')" class="col-lg-3 card-txt">Lurnr
+              <span *ngIf="key === 'learnerId.firstName'">
+                <span *ngIf="reverse">
+                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </span>
+                <span *ngIf="!reverse">
+                  <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                </span>
+              </span>
+
+            </span>
+
+
+
+
+
+            <span (click)="sortList('driverId.firstName')" class="col-lg-3 card-txt">Driver
+              <span *ngIf="key === 'driverId.firstName'">
+                <span *ngIf="reverse">
+                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </span>
+                <span *ngIf="!reverse">
+                  <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                </span>
+              </span>
+
+            </span>
+
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <div *ngIf="show" class="myDiv">
+
+      <div class="container">
+        <div *ngFor="let item of bookingHistory | paginate: { itemsPerPage: 10, currentPage: p ,totalItems: total } |orderBy: key : reverse">
+          <div class="row cust-card mt-4">
+
+            <div class="col-lg-3 card-txt">
+              <b>{{'bookingHistory.listHeader.lurnrname' | translate }}</b>
+
+              <div> {{item.learnerId ? item.learnerId.firstName :"NA"}} </div>
+
+            </div>
+
+
+
+            <div class="col-lg-3 card-txt">
+              <b>{{'bookingHistory.listHeader.drivername' | translate }}</b>
+              <div>{{item.driverId ? item.driverId.firstName :"NA"}} </div>
+            </div>
+            <div class="col-lg-2 card-txt">
+              <b>{{'bookingHistory.listHeader.bookingdate' | translate }}</b>
+              <div>{{item.createdDate | date : "dd.MM.y" }}</div>
+            </div>
+            <div class="col-lg-2 card-txt">
+              <b></b>
+              <div></div>
+            </div>
+            <div class="col-lg-2 card-txt " style="text-align: center;">
+              <!-- <a routerLink="/booking-ride"> -->
+              <button class="edit-btn-style" title="Rides" (click)="goToBookingRides(item._id)">
+
+                <i class="fa">View</i>
+              </button>
+              <!--  </a> -->
+              &nbsp;&nbsp;
+              <button class="edit-btn-style" title="Update Slot" (click)="renderToUpdateSlot(item)" data-toggle="modal"
+                data-target="#myModal">
+                <i class="fa">Edit</i>
+              </button>
+            </div>
+            <div *ngIf="item.hasError != null">
+              <img src="assets/images/danger.png" class="exclamation" alt="" title={{item.hasError}} style="height:20px">
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div *ngIf="hide" class="myDiv">
+      <div class="container">
+
+        <div *ngFor="let item of bookingHistory  | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total } |orderBy: key : reverse ;let i = index">
+          <div class="row cust-card mt-4">
+
+            <div class="col-lg-3 card-txt">
+              <b>{{'bookingHistory.listHeader.lurnrname' | translate }}</b>
+              <div> {{item.learnerId ? item.learnerId?.firstName :"NA"}} </div>
+              <div style="visibility: hidden;">n</div>
+            </div>
+
+
+
+            <div class="col-lg-3 card-txt">
+              <b>{{'bookingHistory.listHeader.drivername' | translate }}</b>
+              <div>{{item.driverId ? item.driverId.firstName :"NA"}}
+
+              </div>
+              <div style="visibility: hidden;">n</div>
+            </div>
+            <div class="col-lg-3 card-txt">
+              <b>{{'bookingHistory.listHeader.bookingdate' | translate }}</b>
+              <div>{{item.createdDate | date : "dd.MM.y" }}</div>
+              <div>{{item.createdDate | date : "HH:mm:ss " }}</div>
+
+            </div>
+
+            <div class="col-lg-2 card-txt" style="text-align: center; display:flex">
+              <!-- <a routerLink="/booking-ride"> -->
+              <button class="edit-btn-style" title="Rides" (click)="goToBookingRides(item._id,item.orderId)">
+
+                <i class="fa">{{'bookingHistory.buttonTitle.ride' | translate }}</i>
+              </button>
+              <!--  </a> -->
+              &nbsp;&nbsp;
+              <button class="edit-btn-style" title="Update Slot" (click)="renderToUpdateSlot(item,i)" #open data-toggle="modal"
+                data-target="#myModal">
+                <i class="fa">{{'bookingHistory.buttonTitle.update' | translate }}</i>
+              </button>
+            </div>
+            <div *ngIf="item.hasError!= null ">
+              <img src="assets/images/danger.png" class="exclamation" alt="" title={{item.hasError}} style="height:20px">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="pagination_cls" *ngIf="temp_sec.length">
+          <pagination-controls (pageChange)="paginationForPaymentHistory($event)"></pagination-controls>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<div class="container">
+
+  <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="tab == 1">
+
+
+    <div class="container">
+
+      <div *ngFor="let item of testCenterBookings | paginate: { itemsPerPage: 10, currentPage: p ,totalItems: total}"
+        class="row">
+        <div class="col-md-12">
+
+          <div class="row cust-card mt-4">
+
+            <div class="col-lg-2">
+
+
+              <img [src]="item.learnerId ? picUrl+item.learnerId.profilePictureUrl : 'assets/images/userPlaceholder.png'"
+                (error)="errorHandler($event)" class="card-image">
+
+            </div>
+
+            <div class="col-lg-3 card-txt">
+              <b>{{'bookingHistory.listHeader.lurnrname' | translate }}</b>
+              <div> {{item.learnerId ? item.learnerId.firstName :"NA"}} </div>
+
+            </div>
+
+            <div class="col-lg-3 card-txt">
+              <b>{{'bookingHistory.listHeader.status' | translate }}</b>
+              <div>{{item.status}}</div>
+            </div>
+            <div class="col-lg-2 card-txt">
+              <b>{{'bookingHistory.listHeader.bookingdate' | translate }}</b>
+              <div>{{item.testDate | date : "dd.MM.y "}}</div>
+              <div>{{item.testDate | date : "HH:mm:ss "}}</div>
+            </div>
+
+            <div class="col-lg-2 card-txt" style="text-align: center;" *ngIf="item.status!='COMPLETED'">
+              <button class="edit-btn-style" data-toggle="modal" data-target="#testCenter" (click)="renderToCenterUpdate(item)">
+                <i class="fa">{{'bookingHistory.buttonTitle.updatestatus' | translate }}</i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="pagination_cls" *ngIf="temp.length">
+        <pagination-controls (pageChange)="paginationForTestCenterBooking($event)"></pagination-controls>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+
+    <div class="modal-content">
+
+      <div class="modal-body">
+
+        <form action="" method="" class="pop_met" #myForm="ngForm" (ngSubmit)="update()">
+
+          <p>
+            Update Time Slot and Driver
+          </p>
+          <div class="row">
+
+            <div class="col-md-10 ">
+
+              <div class="input_conatiner">
+
+                <input type="text" class="mod_input" placeholder="Select Driver" style="cursor: pointer;" [(ngModel)]="showDriverName"
+                  (click)="closeParentModel()" data-toggle="modal" name="showDriverName" data-target="#myModal1">
+
+                <select name="time" [(ngModel)]="slotupdate.time" style="cursor: pointer;" class="custom-select d-block w-100 ">
+                  <option [ngValue]="undefined" disabled selected> Please select timeslot </option>
+                  <option *ngFor="let time of timeslots" [value]="time._id">
+                    {{time.name}}
+                  </option>
+                </select>
+                <button type="submit" name="" value="Submit" (click)="UpdateDriverAndSlot()" class="loggin_pop sign_page_sub">Update</button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </form>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" #close data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="testCenter" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-body">
+
+        <form action="" method="" class="pop_met" #myForm="ngForm" (ngSubmit)="update()">
+
+          <p>
+            Update Booked Test Center Status and Date
+          </p>
+          <div class="row">
+
+            <div class="col-md-10 ">
+
+              <div class="input_conatiner">
+                <select style="cursor: pointer;" name="status" [(ngModel)]="bookTest.status" class="form-control">
+
+                  <option [ngValue]="undefined" disabled selected> Please select status </option>
+                  <option *ngFor="let status of allstatus" [value]="status">
+                    {{status}}
+                  </option>
+                </select>
+                <br />
+
+
+                <input [owlDateTimeTrigger]="dt5" style="cursor: pointer;" [owlDateTime]="dt5" class="form-control"
+                  name="dateTime" [(ngModel)]='bookTest.dateTime' placeholder="Select Date/Time">
+                <owl-date-time [pickerMode]="dialog" #dt5></owl-date-time>
+
+                <button type="submit" name="" value="Submit" (click)="UpdateBookTestCenter()" class="loggin_pop sign_page_sub">Update</button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </form>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" #close1 class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<!-- 
+<div class="container">
+  <div class="modal fade" id="myModals1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <input type="text" class="mod_input " [(ngModel)]="txtSearch" placeholder="Search" (input)="searchName($event.target.value)"
+            name="" id="">
+        </div>
+        <div class="item_itrate">
+          <div class="row  ssitem mb-2" *ngFor="let item of drivers | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total }"
+            data-dismiss="modal" (click)="getDriverNamePlaceHolder(item.firstName,item.lastName,item._id)">
+            <div class="col-3">
+              <img src="assets/images/userPlaceholder.png" class="search-image">
+            </div>
+            <div class="col-9 search-text">
+              {{item.firstName + " "+item.lastName}}
+              <br> {{item.email}}
+            </div>
+          </div>
+          <div id="background" *ngIf="drivers.length <= 0 ">
+            <p id="bg-text">N0 Record..!</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        <div class="pagination_cls">
+          <pagination-controls (pageChange)="paginationForDrivers($event)"></pagination-controls>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div> -->
+
+<button #open data-toggle="modal" data-target="#myModal" hidden></button>
+
+
+
+
+
+
+<div class="modal fade" id="myModal1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="form-wrapper">
+
+        <input type="text" class="mod_input " [(ngModel)]="txtSearch" placeholder="Search" (input)="searchName($event.target.value)"
+          name="" id="">
+        <div class="search-area">
+          <div class="row  ssitem mb-2" *ngFor="let item of drivers | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total }"
+            data-dismiss="modal" (click)="getDriverNamePlaceHolder(item.firstName,item.lastName,item._id)">
+            <!-- <p class="item_school"> {{item.firstName + " "+item.lastName}} </p> -->
+            <div class="col-3">
+              <img [src]=" item.profilePictureUrl ? picUrl+ item.profilePictureUrl :   'assets/images/userPlaceholder.png'"
+                (error)="errorHandler($event)" class="photo_upload" alt="">
+
+            </div>
+            <div class="col-9 search-text">
+              {{item.firstName + " "+item.lastName}}
+              <br> {{item.email ? item.email : "NA"}}
+            </div>
+          </div>
+
+        </div>
+        <div *ngIf="drivers.length <= 0 ">
+          <p id="bg-text">N0 Record..!</p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+        <div class="pagination" class="my-pagination">
+          <pagination-controls maxSize="5" (pageChange)="paginationForDrivers($event)"></pagination-controls>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="background" *ngIf="noData">
+        <p id="bg-text">No Detail Found..!</p>
+        </div>

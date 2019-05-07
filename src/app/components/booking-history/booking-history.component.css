@@ -1,0 +1,326 @@
+/* .row{
+    margin: 0;
+} */
+/* .butt_wrapp5 {
+    margin-top: 25px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;}
+   .type12{
+        margin: auto;
+    } */
+
+    /* img.pic12 {
+        width: 43px;
+        height: 40px;
+        margin-bottom: 5px;
+    } */
+
+    .cust-card{
+        box-shadow: 0 0 15px #ddd;
+        box-shadow: 0 0 15px #ddd;
+        margin: auto;
+        border-radius: 7px;
+        padding: 20px 0px;
+        word-break: break-word;
+        position: relative;
+    }
+
+    .card-image{
+        margin: 0 auto;
+        padding: 0.5em;
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+    }
+
+.card-txt{
+    margin: auto 0;
+    cursor: pointer;
+}
+.cust-card-header{
+display: flex;
+flex-wrap: wrap;
+margin-right: -15px;
+margin-left: -15px;
+margin: top;
+margin-top: 19px;
+margin-bottom: -22px;
+}
+.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+    background-color:orange !important;
+    color: white !important;
+}
+
+.edit-btn-style{
+    border: 1px solid #F9A11B;
+    background: transparent;
+    color: #F9A11B;
+}
+.pagination_cls {
+    margin-top: 25px;
+    text-align: right;
+}
+#myInput {
+   
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+#myInput:focus {outline: 3px solid #ddd;}
+
+
+.item_school {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    background-color: #d2a1a1;
+    margin: 0;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: -24px;
+    
+}
+
+
+.item_itrate {
+    overflow: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.schoolLabel {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    margin: 10px;
+    font-size: 26px;
+}
+.loggin_pop {
+    cursor: pointer;
+}
+
+#background{
+    position:absolute;
+    z-index:0;
+    background:white;
+    display:block;
+    min-height:50%; 
+    min-width:50%;
+    color:yellow;
+}
+
+#content{
+    position:absolute;
+    z-index:1;
+}
+
+#bg-text
+{
+    color: lightgrey;
+    font-size: 59px;
+    transform: rotate(300deg);
+    -webkit-transform: rotate(360deg);
+    /* margin-left: 279px; */
+    cursor: default;
+    padding-left: 69px;
+}
+
+.item_school {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    background-color: #d2a1a1;
+    margin: 0;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: -24px;
+    
+}
+
+
+.item_itrate {
+    overflow: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.schoolLabel {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    margin: 10px;
+    font-size: 26px;
+}
+.loggin_pop {
+    cursor: pointer;
+}
+
+#background{
+    position:absolute;
+    z-index:0;
+    background:white;
+    display:block;
+    min-height:50%; 
+    min-width:50%;
+    color:yellow;
+}
+
+#content{
+    position:absolute;
+    z-index:1;
+}
+
+#bg-text
+{
+    color: lightgrey;
+    font-size: 32px;
+    transform: rotate(300deg);
+    -webkit-transform: rotate(360deg);
+    /* margin-left: 279px; */
+    cursor: default;
+    padding-left: 69px;
+}
+
+
+
+button.btn.btn-primary.add_dvr {
+    vertical-align: super;
+}
+
+
+
+.modal-content{
+    padding: 36px;
+    max-width: 400px;
+    margin: auto;
+    position: relative;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+}
+
+.close-icon{
+    position: absolute;
+    cursor: pointer;
+    right: 28px;
+    top: 15px;
+    height: 20px;
+}
+
+.modal-title{
+    font-size: 23px;
+    margin-bottom: 30px;
+}
+
+.sitem{
+    border: 1px solid #ddd !important;
+    margin: 0 !important;
+    border-radius: 7px !important;
+}
+
+.ssitem{
+    border: 1px solid #ddd !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    border-radius: 7px !important;
+    cursor: pointer;
+}
+.ssitem:hover {
+    background-color: #d8d2d2;
+}
+
+.search-image{
+    width: 48px !important;
+    height: 48px !important;
+    padding: 5px !important;
+    display: block;
+    margin: 0 auto;
+}
+
+.search-text{
+    font-size: 12px;
+    margin: auto;
+}
+
+.search-icon{
+    font-size: 28px;
+    margin: auto;
+}
+
+.search-area{
+    max-height: 180px !important;
+    overflow-y: scroll !important;
+    background-color: #f1f1f0;
+}
+
+.detail-btn-style{
+    background: #F9A11B;
+    font-family: 'Cabin', sans-serif;
+    color: white;
+    display: block;
+    border: 1px solid #F9A11B;
+    margin: auto;
+    width: 100%;
+}
+
+.invoice-detail-image{
+    width: 48px !important;
+    height: 48px !important;
+    padding: 5px !important;
+    display: block;
+}
+
+
+.my-pagination {
+    padding: 0px;
+    font-size: 10px;
+    margin-left: -31px;
+    margin-bottom: 1em;
+}
+.photo_upload{
+    height: 49px;
+    width: 49px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    
+}
+
+#background{
+    position:absolute;
+    z-index:0;
+    background:white;
+    display:block;
+    min-height:50%; 
+    min-width:50%;
+    color:yellow;
+}
+
+#content{
+    position:absolute;
+    z-index:1;
+}
+
+#bg-text
+{
+    color:lightgrey;
+    font-size:88px;
+    transform:rotate(300deg);
+    -webkit-transform: rotate(360deg);
+    margin-left: 279px;
+    cursor: default
+}
+
+.exclamation{
+
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

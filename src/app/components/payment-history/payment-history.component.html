@@ -1,0 +1,158 @@
+<div class="container">
+<div class="row" style="margin:1em 0 0 0 !important;">
+  <div class="col-lg-6 col-md-6 col-sm-6">
+      <button class="btn btn-primary add_dvr" routerLink="/create-invoice">{{'paymentHistory.buttonTitle.createinvoicebuttonTitle' | translate }}</button>
+  </div>
+
+  <div class="col-lg-6 col-md-6 col-sm-6 textRight" *ngIf=" isInvoicesData">
+
+  <span  class="filter12" data-toggle="modal" data-target="#filter">
+ {{status}}
+       <i class="fa fa-filter" style="color: #f00;    font-size: 38px;" aria-hidden="true" ></i>
+   </span>
+
+
+  </div>
+</div>
+<div class="m-4">
+        <div class="row ssitem mb-3 p-2" *ngFor="let invoice of invoices | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total}" style="box-shadow: 0px 2px 15px #c1c1c1;" (click)="navigateToinvoiceDetail(invoice._id)">
+            <div class="col-1 search-icon text-left">
+                <i class="fa fa-file" style="color: #ff0000;" aria-hidden="true"></i>
+            </div>
+            <div class="col-4 search-text">
+              <strong>{{'paymentHistory.listheader.invoiveIdTitle' | translate }}</strong><br>
+              {{invoice._id}}
+            </div>
+            <div class="col-4 search-text">
+              <strong>{{'paymentHistory.listheader.amountTitle' | translate }}</strong><br>
+              £ {{invoice.amount}}
+            </div>
+            <div class="col-2 search-text">
+              <strong>{{'paymentHistory.listheader.taxTitle' | translate }}</strong><br>
+              £ {{invoice.tax}}
+            </div>
+            <div class="col-1 search-text">
+                <strong>{{invoice.status == 'NOT_PAID' ? 'Unpaid' : 'Paid'}}</strong>
+            </div>
+        </div>
+</div>
+
+
+<div class="pagination_cls" *ngIf=" isInvoicesData">
+  <pagination-controls (pageChange)="paginationForInvoices($event)"></pagination-controls>
+</div>
+
+
+
+
+
+<div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="filterLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <img src="./assets/images/cancilPop.png" #close class="close-icon" data-dismiss="modal">
+          <h2 class="modal-title">Filter</h2>
+            <div class="form-wrapper">
+              <select class="custom-select mb-3" [(ngModel)]="status" (ngModelChange)="sortInvoices()" id="inputGroupSelect01">
+                <option value="All" selected>All</option>
+                <option value="Paid">Paid</option>
+                <option value="Unpaid">Unpaid</option>
+              </select>
+              <!-- <div class="input-group mb-3">
+                  <input type="text" bsDatepicker #dp="bsDatepicker" class="form-control date-picker-style" placeholder="From Date"
+                    aria-label="From Date" name="fromDate" [(ngModel)]="fromDate" required aria-describedby="button-addon3">
+
+                  <div class="input-group-append" id="button-addon3">
+                    <button (click)="dp.toggle()" class="btn btn-outline-secondary date-btn-style" type="button">
+                      <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div> -->
+
+                <!-- <div class="input-group mb-3">
+                    <input type="text" bsDatepicker #dp="bsDatepicker" class="form-control date-picker-style" placeholder="To Date"
+                      aria-label="To Date" name="toDate" [(ngModel)]="toDate" required aria-describedby="button-addon3">
+
+                    <div class="input-group-append" id="button-addon3">
+                      <button (click)="dp.toggle()" class="btn btn-outline-secondary date-btn-style" type="button">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div> -->
+              <!-- <select class="custom-select mb-3" [(ngModel)]="paymentType" id="inputGroupSelect01">
+                <option value="" selected>Choose one...</option>
+                <option value="individual">Individual Driver</option>
+                <option value="school">School</option>
+              </select> -->
+<!-- 
+              <div class="input-group mb-3" *ngIf="paymentType == 'individual' && !isSearch">
+                <select class="custom-select" [(ngModel)]="selectedIndividualId" id="inputGroupSelect04" aria-label="Example select with button addon">
+                  <option value="" selected>Choose Individual Driver...</option>
+                  <option *ngFor="let individual of individuals" [value]="individual._id">{{individual.email}}</option>
+                </select>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" (click)="isSearch = !isSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+              </div>
+
+              <div class="input-group mb-3" *ngIf="paymentType == 'individual' && isSearch">
+                <input type="text" class="form-control" (input)="searchIndividual()" [(ngModel)]="individualSearchedText" placeholder="Search for individual driver" aria-label="Search for individual driver" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" (click)="isSearch = !isSearch"><i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                </div>
+              </div> -->
+
+              <!-- <div *ngIf="paymentType == 'individual' && isSearch">
+                  <div class="row  ssitem mb-2" *ngFor="let individual of searchedIndividuals" (click)="selectIndividual(individual._id)">
+                      <div class="col-3">
+                        <img src="assets/images/driver.png" class="search-image">
+                      </div>
+                      <div class="col-9 search-text">
+                          {{individual.firstName}}
+                          <br>
+                          {{individual.email}}
+                      </div>
+                  </div>
+              </div> -->
+
+
+              <!-- <div class="input-group mb-3" *ngIf="paymentType == 'school' && !isSearch">
+                <select class="custom-select" [(ngModel)]="selectedSchoolId" id="inputGroupSelect04" aria-label="Example select with button addon">
+                  <option value="" selected>Choose School...</option>
+                  <option *ngFor="let school of schools" [value]="school.school._id">{{school.school.schoolName}}</option>
+                </select>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" (click)="isSearch = !isSearch"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+              </div>
+
+              <div class="input-group mb-3" *ngIf="paymentType == 'school' && isSearch">
+                <input type="text" class="form-control" (input)="searchSchool()" [(ngModel)]="schoolSearchedText" placeholder="Search for school" aria-label="Search for school" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" (click)="isSearch = !isSearch"><i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                </div>
+              </div> -->
+
+              <!-- <div *ngIf="paymentType == 'school' && isSearch" class="search-area">
+                  <div class="row  mb-3 ssitem" *ngFor="let school of searchedSchools" (click)="selectSchool(school.school._id)">
+                      <div class="col-3 search-icon text-center">
+                        <i class="fa fa-university" aria-hidden="true"></i>
+                      </div>
+                      <div class="col-9 search-text">
+                        {{school.school.schoolName}}
+                        <br>
+                        {{school.user.email}}
+                      </div>
+                  </div>
+              </div> -->
+
+            </div>
+      </div>
+  </div>
+</div>
+
+</div>
+
+<div id="background" *ngIf=" !isInvoicesData">
+  <p id="bg-text">No Payment History Found</p>
+  </div>
+

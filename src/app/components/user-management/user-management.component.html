@@ -1,0 +1,600 @@
+<br>
+
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-4 card-txt">
+      <div class="userHeadWrap">
+        <img src="assets/images/user1.png" class="calen_icon" style="margin: auto" alt=""> {{
+        'usermanagement.selectuserTitle' | translate }}
+      </div>
+      <select class="custom-select title" (change)="chooseUser()" [(ngModel)]="userType">
+        <option hidden value="all" disabled selected>{{ 'usermanagement.selecttypeTitle' | translate }}</option>
+        <option value="driver">{{ 'usermanagement.driver' | translate }} </option>
+        <option value="school">{{ 'usermanagement.school' | translate }}</option>
+        <option value="lurnr">{{ 'usermanagement.lurnr' | translate }} </option>
+        <option value="subadmin" *ngIf="isAdmin">{{ 'usermanagement.subadmin' | translate }}</option>
+      </select>
+
+    </div>
+
+    <div class="col-md-3" *ngIf="showBtn">
+      <div class="userHeadWrap">
+        <label for="filter">{{ 'usermanagement.searchTitle' | translate }} </label>
+      </div>
+
+      <input type="text" class="search custom-select" [(ngModel)]="txtSearch" placeholder="{{ 'usermanagement.searchTitle' | translate }}" (input)="searchName($event.target.value)"
+        name="" id="">
+    </div>
+
+    <div class="col-md-3">
+      <div *ngIf="isUsers && isDriver">
+
+        <div class="userHeadWrap">
+          <label for="filter">{{ 'usermanagement.filterTitle' | translate }}</label>
+        </div>
+
+        <select class="custom-select " (change)="chooseFilter()" [(ngModel)]="selectFilter">
+          <option hidden value="all" disabled selected>{{ 'usermanagement.filtercontantChild.allTitle' | translate }}</option>
+          <option value="all" selected>{{ 'usermanagement.selecttypeTitle' | translate }}</option>
+          <option value="notverified">{{ 'usermanagement.filtercontantChild.notverifiedTitle' | translate }}</option>
+          <option value="conferm">{{ 'usermanagement.filtercontantChild.confirmedTitle' | translate }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-2" style="text-align: right" *ngIf="showBtn">
+      <button class="btn btn-default add_btn" id="btn_add" (click)="goToAddPage()">{{
+        'usermanagement.buttonTitle.addbuttonTitle' | translate }}</button>
+    </div>
+
+  </div>
+
+
+</div>
+
+<br>
+
+
+
+
+
+
+
+
+
+<div class="container" *ngIf="isUsers && users.length>0">
+  <div class="row" style="margin: 0;">
+
+    <div class="col-lg-2">
+
+
+
+    </div>
+
+    <div class="col-lg-2 card-txt" (click)="sortList('firstName')">
+      <b>{{ 'usermanagement.header.nameTitle' | translate }}
+
+        <span *ngIf="key === 'firstName'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+      </b>
+      <div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-2 card-txt " (click)="sortList('email')">
+      <b>{{ 'usermanagement.header.emailTitle' | translate }}
+        <span *ngIf="key === 'email'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+      </b>
+      <div></div>
+    </div>
+
+
+    <div class="col-lg-2 card-txt" (click)="sortList('schoolTouser.schoolName')" *ngIf="isSchoolNameShow">
+
+
+      <b>{{ 'usermanagement.header.schoolnameTitle' | translate }}
+
+        <span *ngIf="key === 'schoolTouser.schoolName'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+
+      </b>
+      <div></div>
+
+
+    </div>
+
+
+
+
+    <div class="col-lg-2 card-txt" (click)="sortList('mobileNumber')">
+      <b>{{ 'usermanagement.header.mobilenumberTitle' | translate }}
+        <span *ngIf="key === 'mobileNumber'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+      </b>
+      <div></div>
+    </div>
+    <div class="col-lg-2 card-txt" style="text-align: center;">
+      <div class=" card-txt">
+
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="container">
+
+
+  <div class="users" *ngIf="isUsers">
+
+    <div *ngFor="let item of users | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total } | orderBy: key : reverse ; let i = index">
+
+
+      <div class="row cust-card mt-4">
+
+
+        <div class="col-lg-2">
+
+
+          <img [src]="item.profilePictureUrl ? picUrl+item.profilePictureUrl : 'assets/images/userPlaceholder.png'"
+            (error)="errorHandler($event)" class="card-image">
+
+        </div>
+
+        <div class="col-lg-2 card-txt">
+          <b>{{ 'usermanagement.header.nameTitle' | translate }}
+
+
+          </b>
+          <div> {{item.firstName ? item.firstName :"NA"}} </div>
+
+        </div>
+
+        <div class="col-lg-2 card-txt ">
+          <b>{{ 'usermanagement.header.emailTitle' | translate }}
+
+          </b>
+          <div class="b">{{item.email ? item.email :"NA"}}</div>
+        </div>
+
+
+        <div class="col-lg-2 card-txt" *ngIf="isSchoolNameShow">
+          <div>
+
+            <b>{{'usermanagement.header.schoolnameTitle' | translate }}
+
+            </b>
+            <div>{{item.SchoolToUser['school'][0] ? item.SchoolToUser['school'][0].schoolName :"NA"}}</div>
+
+          </div>
+        </div>
+
+
+        <div class="col-lg-2 card-txt">
+          <b>{{'usermanagement.header.mobilenumberTitle' | translate }}
+            <div ng-class="getSortClass(item.mobileNumber )">
+
+            </div>
+          </b>
+          <div>{{item.mobileNumber ? item.mobileNumber :"NA"}}</div>
+        </div>
+        <div class="col-lg-2 card-txt" style="text-align: center;">
+          <button class="edit-btn-style" (click)="goToUpdatePage(item._id,item.userType,'nothing')">
+            <i class="fa">{{'usermanagement.buttonTitle.editbuttonTitle' | translate }}</i>
+          </button>
+
+
+
+          <div *ngIf="isSchoolNameShow" style="display:inline-block;">
+            <button [hidden]="isApproved(item)" class="enableBtn" id="approveBtn" (click)="disableItem('aprove',item)">{{'usermanagement.buttonTitle.approvebuttonTitle' | translate }}</button>
+            <input (click)="disableItem('Disable',item)" type="button" [class]="setClass(item)" [hidden]="!isApproved(item)"
+              [title]="isVerified(item)" [value]="isVerified(item)">
+          </div>
+
+          <div *ngIf="!isSchoolNameShow" style="display:inline-block;">
+            <input (click)="disableItem('Disable',item)" type="button" [class]="setClass(item)" [title]="isVerified(item)"
+              [value]="isVerified(item)">
+
+          </div>
+
+          <div class=" card-txt">
+
+          </div>
+
+
+        </div>
+
+        <i class="fa fa-check verifyCheck" [hidden]="!isApproved(item)">{{'usermanagement.buttonTitle.verifiediconTitle' | translate }}</i>
+
+
+
+      </div>
+    </div>
+
+
+
+
+    <div class="pagination_cls" *ngIf="users.length>0">
+      <pagination-controls (pageChange)="paginationForUsers($event)"></pagination-controls>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="container" *ngIf="isschoolUsers && isschoolUsers.length>0">
+    <div class="row" style="margin: 0;">
+
+      <div class="col-lg-2">
+
+
+
+      </div>
+
+      <div class="col-lg-2 card-txt" (click)="sortList('school.contactPersonName')">
+        <b>{{'usermanagement.header.nameTitle' | translate }}
+          <span *ngIf="key === 'school.contactPersonName'">
+            <span *ngIf="reverse">
+              <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            </span>
+            <span *ngIf="!reverse">
+              <i class="fa fa-arrow-down" aria-hidden="true"></i>
+            </span>
+          </span>
+
+        </b>
+        <div>
+
+        </div>
+
+      </div>
+
+      <div class="col-lg-2 card-txt " (click)="sortList('school.contactPersonEmail ')">
+        <b>{{'usermanagement.header.emailTitle' | translate }}
+          <span *ngIf="key === 'school.contactPersonEmail '">
+            <span *ngIf="reverse">
+              <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            </span>
+            <span *ngIf="!reverse">
+              <i class="fa fa-arrow-down" aria-hidden="true"></i>
+            </span>
+          </span>
+        </b>
+        <div></div>
+      </div>
+
+
+      <div class="col-lg-2 card-txt" (click)="sortList('school.schoolName ')">
+
+
+        <b>{{'usermanagement.header.schoolnameTitle' | translate }}
+
+          <span *ngIf="key === 'school.schoolName '">
+            <span *ngIf="reverse">
+              <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            </span>
+            <span *ngIf="!reverse">
+              <i class="fa fa-arrow-down" aria-hidden="true"></i>
+            </span>
+          </span>
+
+        </b>
+        <div></div>
+
+
+      </div>
+
+
+      <div class="col-lg-2 card-txt" (click)="sortList('school.contactPersonMobileNumber ')">
+        <b>{{'usermanagement.header.mobilenumberTitle' | translate }}
+          <span *ngIf="key === 'school.contactPersonMobileNumber '">
+            <span *ngIf="reverse">
+              <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            </span>
+            <span *ngIf="!reverse">
+              <i class="fa fa-arrow-down" aria-hidden="true"></i>
+            </span>
+          </span>
+        </b>
+        <div></div>
+      </div>
+      <div class="col-lg-2 card-txt" style="text-align: center;">
+        <div class=" card-txt">
+
+        </div>
+
+
+      </div>
+      <!-- <label class="animaterContainer animaterContainer1">Disable
+        <input type="checkbox" name="check" class="disable_check"  disabled value="true">
+
+        <span class="checkmark"></span>
+        <br>
+      </label> -->
+    </div>
+  </div>
+
+
+
+
+
+  <div class="schoolUsers" *ngIf="isschoolUsers">
+
+    <div *ngFor="let item of schoolUsers | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total} | orderBy: key : reverse">
+
+      <div class="row cust-card mt-4">
+
+        <div class="col-lg-2">
+
+
+          <img [src]="item.profilePictureUrl ? picUrl+item.profilePictureUrl : 'assets/images/userPlaceholder.png'"
+            (error)="errorHandler($event)" class="card-image">
+
+        </div>
+
+        <div class="col-lg-2 card-txt">
+          <b>{{'usermanagement.header.nameTitle' | translate }}
+
+
+          </b>
+          <div> {{item.school.contactPersonName ? item.school.contactPersonName :"NA"}} </div>
+
+        </div>
+
+        <div class="col-lg-2 card-txt ">
+          <b>{{'usermanagement.header.emailTitle' | translate }}
+
+          </b>
+          <div class="b">{{item.school.contactPersonEmail ? item.school.contactPersonEmail :"NA"}}</div>
+        </div>
+
+
+        <div class="col-lg-2 card-txt">
+          <div>
+
+            <b>{{'usermanagement.header.schoolnameTitle' | translate }}
+
+            </b>
+            <div>{{item.school.schoolName? item.school.schoolName: "NA"}}</div>
+
+          </div>
+        </div>
+
+
+        <div class="col-lg-2 card-txt">
+          <b>{{'usermanagement.header.mobilenumberTitle' | translate }}
+            <div ng-class="getSortClass(item.mobileNumber )">
+
+            </div>
+          </b>
+          <div>{{item.school.contactPersonMobileNumber ? item.school.contactPersonMobileNumber :"NA"}}</div>
+        </div>
+        <div class="col-lg-2 card-txt" style="text-align: center;">
+          <button class="edit-btn-style" (click)="goToUpdatePage(item.user._id,item.userType,item.school._id,item.school.schoolName)">
+            <i class="fa">{{'usermanagement.buttonTitle.editbuttonTitle' | translate }}</i>
+          </button>
+
+
+          <input (click)="disableItem('Disable',item)" type="button" [class]="setClass(item)" [title]="isVerified(item)"
+            [value]="isVerified(item)">
+
+          <div class=" card-txt">
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+    <div class="pagination_cls" *ngIf="schoolUsers.length ">
+      <pagination-controls (pageChange)="paginationForSchool($event)"></pagination-controls>
+    </div>
+
+  </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="container" *ngIf="isSubAdmin">
+  <div class="row" style="margin: 0;">
+
+    <div class="col-lg-2">
+
+
+
+    </div>
+
+    <div class="col-lg-2 card-txt" (click)="sortList('firstName')">
+      <b>{{'usermanagement.header.nameTitle' | translate }}
+
+        <span *ngIf="key === 'firstName'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+      </b>
+      <div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-2 card-txt " (click)="sortList('email')">
+      <b>{{'usermanagement.header.emailTitle' | translate }}
+        <span *ngIf="key === 'email'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+      </b>
+      <div></div>
+    </div>
+
+
+
+
+
+
+
+    <div class="col-lg-2 card-txt" (click)="sortList('mobileNumber')">
+      <b>{{'usermanagement.header.mobilenumberTitle' | translate }}
+        <span *ngIf="key === 'mobileNumber'">
+          <span *ngIf="reverse">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="!reverse">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+          </span>
+        </span>
+      </b>
+      <div></div>
+    </div>
+    <div class="col-lg-2 card-txt" style="text-align: center;">
+      <div class=" card-txt">
+
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="users" *ngIf="isSubAdmin">
+
+    <div *ngFor="let item of subAdminList | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total } | orderBy: key : reverse">
+
+      <div class="row cust-card mt-4">
+
+        <div class="col-lg-2">
+
+
+          <img [src]="item.profilePictureUrl ? picUrl+item.profilePictureUrl : 'assets/images/userPlaceholder.png'"
+            (error)="errorHandler($event)" class="card-image">
+
+        </div>
+
+        <div class="col-lg-2 card-txt">
+          <b>{{'usermanagement.header.nameTitle' | translate }}
+
+
+          </b>
+          <div> {{item.firstName ? item.firstName :"NA"}} </div>
+
+        </div>
+
+        <div class="col-lg-2 card-txt ">
+          <b>{{'usermanagement.header.emailTitle' | translate }}
+
+          </b>
+          <div class="b">{{item.email ? item.email :"NA"}}</div>
+        </div>
+
+
+
+
+        <div class="col-lg-2 card-txt">
+          <b>{{'usermanagement.header.mobilenumberTitle' | translate }}
+            <div ng-class="getSortClass(item.mobileNumber )">
+
+            </div>
+          </b>
+          <div>{{item.mobileNumber ? item.mobileNumber :"NA"}}</div>
+        </div>
+        <div class="col-lg-2 card-txt" style="text-align: center;">
+          <button class="edit-btn-style" (click)="goToUpdatePage(item._id,item.userType,item.userRole)">
+            <i class="fa">{{'usermanagement.buttonTitle.editbuttonTitle' | translate }}</i>
+          </button>
+
+
+          <input (click)="disableItem('Disable',item)" type="button" [class]="setClass(item)" [title]="isVerified(item)"
+            [value]="isVerified(item)">
+
+          <div class=" card-txt">
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+    <div class="pagination_cls" *ngIf="subAdminList.length > 0">
+      <pagination-controls (pageChange)="paginationForSubAdmin($event)"></pagination-controls>
+    </div>
+
+  </div>
+
+
+
+
+</div>
+
+
+<div>
+  <div id="background" *ngIf="noData">
+    <p id="bg-text">No {{userType}} found</p>
+  </div>
+</div>

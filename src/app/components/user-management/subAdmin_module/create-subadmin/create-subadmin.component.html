@@ -1,0 +1,378 @@
+
+
+
+
+<div class="container">
+    <a (click)="goBack()"  class=" roundback" title="Previous Page">&#8249;</a>
+
+<div class="row" style="margin:2em 0 0 0 !important;">
+
+
+
+    <div class="col-lg-12 col-md-12 col-sm-12 text-right">
+    <div class="checkbox_disable">
+
+
+      <label class="animaterContainer" *ngIf="!isAddPage">
+        <button  [class]="btnClass" (click)="disableItem('disable')">{{disableBtn}}</button>
+ 
+     </label>
+
+
+      </div>
+
+ 
+    </div>
+
+
+    
+    
+
+</div>
+
+
+
+
+
+
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+
+
+
+  <div class="row" style="margin:2em 0 0 0 !important;">
+
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <h5>Personal Information</h5>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+
+          <div class="Input">
+
+              <input type="text" class="Input-text" #FNAME="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && FNAME.invalid }" 
+              placeholder="* FirstName"
+              (keypress)="omit_special_char($event)"
+              (keypress)=" charOnly($event)"  
+               name="firstName" [(ngModel)]="firstName">
+  
+              <label for="input" class="Input-label">* FirstName</label>
+  
+            </div>
+       
+       
+       
+       
+       
+
+        <div class="message-space">
+
+          <!-- <span *ngIf="FNAME.touched && FNAME?.errors && FNAME?.errors.required ||f.submitted && FNAME.invalid">
+            First Name is required
+          </span> -->
+        </div>
+
+        <div class="Input">
+
+            <input type="text" class="Input-text" #LNAME="ngModel" 
+            (keypress)="omit_special_char($event)"
+            (keypress)=" charOnly($event)"  
+            [ngClass]="{ 'is-invalid': f.submitted && LNAME.invalid }"
+             placeholder="* LastName"
+            name="lastName" [(ngModel)]='lastName'>
+
+            <label for="input" class="Input-label">* LastName</label>
+
+          </div>
+    
+        <div class="message-space">
+
+
+
+          <!-- <span *ngIf="LNAME.touched && LNAME?.errors && LNAME?.errors.required ||f.submitted && LNAME.invalid">
+            Last Name is required
+          </span> -->
+        </div>
+
+
+        <div class="Input">
+
+            <input  type="email" class="Input-text"  #EMAIL="ngModel" placeholder="* Email" name="email" [(ngModel)]='email' [ngClass]="{ 'is-invalid': f.submitted && EMAIL.invalid }"
+        pattern='^\w+[\w-\.]*\@\w+((-\w+)|(\w*))(\.[a-z]{2,7}){1,2}$' required>
+
+            <label for="input" class="Input-label">* Email</label>
+
+          </div>
+
+
+    
+        
+          <!-- <input  type="email" class="driverpage" #EMAIL="ngModel" placeholder="* Email" name="email" [(ngModel)]='email' [ngClass]="{ 'is-invalid': f.submitted && EMAIL.invalid }"
+          pattern='^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$' required> -->
+
+          <div class="message-space">
+         
+          <span *ngIf="EMAIL.touched && EMAIL?.errors && EMAIL?.errors.required ||f.submitted && EMAIL.invalid">
+            Email is required
+          </span>
+
+          <span *ngIf="EMAIL.touched && EMAIL?.errors && EMAIL?.errors.pattern">
+            Enter valid email
+          </span>
+
+        </div>
+
+
+        <div class="Input">
+
+            <input [type]="show ? 'text' : 'password'" class="Input-text" #PASSWORD="ngModel" placeholder="* Password"
+            name="password" [(ngModel)]='password' minlength="8" [ngClass]="{ 'is-invalid': f.submitted && PASSWORD.invalid }"
+            required>
+
+            <label for="input" class="Input-label">* Password</label>
+
+          </div>
+
+
+
+     
+
+
+
+        <div class="message-space">
+          <span *ngIf="PASSWORD.touched && PASSWORD?.errors && PASSWORD?.errors.required || f.submitted && PASSWORD.invalid">
+            Password is required
+          </span>
+
+          <span *ngIf="PASSWORD?.errors &&  PASSWORD?.errors.minlength">
+            Password Can't be less then 8 character
+          </span>
+
+        </div>
+
+
+        <div class="Input">
+            <input type="password" class="Input-text" placeholder="Enter Confirm Password" name="confirmPassword"
+            value="" [(ngModel)]="confirmPassword" minlength="8" #CONFIRMPASSWORD="ngModel" appConfirmEqualValidator="password"
+            [ngClass]="{ 'is-invalid': f.submitted && CONFIRMPASSWORD.invalid }" required validateEqual="password">
+
+            <label for="input" class="Input-label">* Enter Confirm Password</label>
+
+          </div>
+
+       
+
+        <div class="message-space">
+
+          <span *ngIf="CONFIRMPASSWORD.touched && CONFIRMPASSWORD?.errors && CONFIRMPASSWORD?.errors.required || f.submitted && CONFIRMPASSWORD.invalid">
+            Confirm Password is required
+          </span>
+
+          <span *ngIf="CONFIRMPASSWORD?.errors && CONFIRMPASSWORD?.errors.notEqual">
+            Password and Confirm does not match (min 8 character)
+          </span>
+
+
+        </div>
+
+
+
+
+
+        <div class="Input">
+            <input type="text" class="Input-text" placeholder="Phone Number" name="mobileNumber" #MOBILENO="ngModel"
+            [(ngModel)]="mobileNumber" [ngClass]="{ 'is-invalid': f.submitted && MOBILENO.invalid }" (keypress)="numberOnly($event)"
+            maxlength="13" minlength="9" required>
+
+            <label for="input" class="Input-label">Phone Number</label>
+
+          </div>
+
+        
+
+     
+
+      <div class="message-space">
+
+        <span *ngIf="MOBILENO.touched && MOBILENO?.errors && MOBILENO?.errors.required || f.submitted && MOBILENO.invalid">
+          Mobile Number is required!
+        </span>
+        <span *ngIf="MOBILENO?.errors && MOBILENO?.errors.maxlength">
+          Mobile Number can't more then 13 digit
+        </span>
+        <span *ngIf=" MOBILENO?.errors && MOBILENO?.errors.minlength">
+          Mobile Number can't less then 9 and more then 13 digit
+        </span>
+      </div>
+
+        <!-- <input type="text" class="form-control attach" #ADIPDI="ngModel"  name="adiOrPdiBadgeNumber"
+        [(ngModel)]='adiOrPdiBadgeNumber' [ngClass]="{ 'is-invalid': f.submitted && ADIPDI.invalid }" placeholder="* Instructor Badge Number"
+        aria-label="Attach Istructor Badge" aria-describedby="button-addon2" required>
+
+        <div class="message-space" >
+          <span *ngIf="ADIPDI.touched && ADIPDI?.errors && ADIPDI?.errors.required || f.submitted && ADIPDI.invalid">
+            API/PDI BadgeNumber is required
+          </span>
+        </div>
+        
+        <input type="text" class="form-control attach"  aria-label="Attach  Driving License"
+        aria-describedby="button-addon2" #Dl="ngModel" placeholder="* Driving Licence Number" [ngClass]="{ 'is-invalid': f.submitted && Dl.invalid }"
+        name="drivingLicence" [(ngModel)]='drivingLicense' name="dlName" required>
+
+        <div class="message-space">
+
+          <span *ngIf="Dl.touched  && Dl?.errors && Dl?.errors.required || f.submitted && Dl.invalid">
+            Driving Licence is required
+          </span>
+        </div> -->
+
+      </div>
+    </div>
+
+
+
+
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <h5>Address Information</h5>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+
+          <div class="Input">
+              <select class="custom-select d-block w-100 Input-text" #COUNTRY="ngModel" (change)="findState()" [(ngModel)]="country" name="country"
+              [ngClass]="{ 'is-invalid': f.submitted && COUNTRY.invalid }" >
+              <option hidden value="" disabled selected>* Select Country </option>
+              <option *ngFor="let co of countries" [value]="co.value">{{co.name}}</option>
+            </select>
+  
+              <label for="input" class="Input-label" *ngIf="country">* Select Country</label>
+  
+            </div>
+
+
+      
+        <div class="message-space">
+          <!-- <span *ngIf="COUNTRY.touched && COUNTRY?.errors && COUNTRY?.errors.required || f.submitted && COUNTRY.invalid">
+            Country is required
+          </span> -->
+        </div>
+
+        <div class="Input">
+            <select class="custom-select d-block w-100 Input-text" #STATE="ngModel"
+            [(ngModel)]="state" (change)="findCity()" name="state"
+             [ngClass]="{ 'is-invalid': f.submitted && STATE.invalid }"
+             >
+             <option hidden value="" disabled selected>* Select County </option>
+             <option *ngFor="let state of stateList" [value]="state.value">{{state.name}}</option>
+           </select>
+
+            <label for="input" class="Input-label" *ngIf="state">* Select County</label>
+
+          </div>
+
+   
+
+        <div class="message-space">
+          <!-- <span *ngIf="STATE.touched && STATE?.errors && STATE?.errors.required || f.submitted && STATE.invalid">
+            State is required
+          </span> -->
+        </div>
+
+        <div class="Input">
+            <select class="custom-select d-block w-100 Input-text" #CITY="ngModel" [(ngModel)]="city"  [ngClass]="{ 'is-invalid': f.submitted && CITY.invalid }"
+            name="city">
+            <option hidden value="" disabled selected>* Select City </option>
+            <option *ngFor="let city of cityList" [value]="city.value">{{city.name}}</option>
+          </select>
+
+            <label for="input" class="Input-label" *ngIf="city">* Select City </label>
+
+          </div>
+   
+        <div class="message-space">
+          <!-- <span *ngIf="CITY.touched && CITY?.errors && CITY?.errors.required || f.submitted && CITY.invalid">
+            City is required
+          </span> -->
+        </div>
+        <div class="Input">
+            <input type="text" class="Input-text" placeholder="* Postcode"
+            #PINCODE="ngModel" name="pincode"    maxlength="8" 
+            (keypress)="omit_special_char($event)"
+   
+            [ngClass]="{ 'is-invalid': f.submitted && PINCODE.invalid }"
+             [(ngModel)]="pincode" >
+
+            <label for="input" class="Input-label">* Postcode </label>
+
+          </div>
+
+       
+
+        <div class="message-space">
+          <!-- <span *ngIf="PINCODE.touched && PINCODE?.errors && PINCODE?.errors.required || f.submitted && PINCODE.invalid">
+            Pincode is required!
+          </span> -->
+        </div>
+
+        <div class="Input">
+            <input type="text" class="Input-text" #ADDRESSONE="ngModel"
+            placeholder="* Permanent Address" name="addressLineOne" 
+            [(ngModel)]="addressLineOne"
+             [ngClass]="{ 'is-invalid': f.submitted && ADDRESSONE.invalid }" 
+            >
+
+            <label for="input" class="Input-label">* Permanent Address </label>
+
+          </div>
+
+     
+        <div class="message-space">
+          <!-- <span *ngIf="ADDRESSONE.touched && ADDRESSONE?.errors && ADDRESSONE?.errors.required || f.submitted && ADDRESSONE.invalid">
+            Address is required!
+          </span> -->
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  <div class="row" style="margin:2em 0 2em 0 !important;">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="col-lg-12 col-md-12 col-sm-12 submit-btn-success">
+        <button class="btn btn-primary" class="submit-btn">{{btnTitle}}</button>
+
+
+      </div>
+    </div>
+  </div>
+
+
+</form>
+
+
+
+</div>
+
+
+
+
+

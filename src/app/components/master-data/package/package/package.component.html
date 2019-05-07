@@ -1,0 +1,325 @@
+<div class="container" id='top'>
+    <a routerLink="/master" class="previous round" title="Previous Page">&#8249;</a>
+    <div class="row mt-4" style="margin:2em 0 0 0 !important">
+
+    <div class="col-sm-9 col-md-6 col-lg-8" style="text-align: right">
+
+    </div>
+
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-default add_btn" id="btn_add" (click)="goToAddSection()">Add</button>
+
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6">
+      <div *ngFor="let item of packageList | paginate:{ itemsPerPage: 10, currentPage: p,totalItems: total };let i = index ">
+        <div class="row cust-card cust-card-wrap mt-4">
+
+
+          <div class="col-lg-12 card-txt">
+            <b>Name</b>
+            <div class="itemQuantity"> {{item.name ? item.name : "NA" }} </div>
+
+          </div>
+
+          <div class="col-lg-12 card-txt">
+            <b>Price</b>
+            <div class="itemQuantity">{{item.price ? item.price : "NA" }}</div>
+          </div>
+
+
+          <div class="col-lg-12 card-txt">
+            <b>Tax (%)</b>
+            <div class="itemQuantity">{{item.taxId ? item.taxId.taxPercentage : "NA" }}</div>
+          </div>
+          <div class="col-lg-12 card-txt">
+            <b>No Of Day</b>
+            <div class="itemQuantity">{{item.numberOfDay ? item.numberOfDay : "NA" }}</div>
+          </div>
+
+          <div class="col-lg-12 card-txt">
+            <b>No Of Lesson</b>
+            
+            <div class="itemQuantity">{{item.numberOfLesson ? item.numberOfLesson : "NA" }}</div>
+          </div>
+       
+          <button class="edit-btn-style fixed-edit-btn " (click)="goToUpdateSection(item._id,i )">
+              <i class="fa">Edit</i>
+            </button>
+
+            <div class="disableBtnPosition">
+              <input (click) ="disableItem('Disable',item)" type="button" [class]="setClass(item)" [title]="isVerified(item)" [value]="isVerified(item)">
+        
+             </div>
+        
+        </div>
+      </div>
+      <br>
+      <pagination-controls *ngIf="!noData" (pageChange)="paginationForPackeges($event)"></pagination-controls>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 " *ngIf="addPage">
+      <b class="formTitle">{{pageHeader}}</b>
+      <div>
+        <form class="pop_met" #f="ngForm" novalidate (ngSubmit)="f.form.valid && onSubmit()" name="form">
+
+
+          <div class="Input">
+            <input type="text" class="mod_input Input-text"
+             placeholder="Name" name="name" #attribName="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && attribName.invalid }"
+            required [(ngModel)]='name'>
+
+
+
+            <label for="input" class="Input-label" >Name</label>
+          </div>
+        
+
+        
+         
+          
+
+          <span *ngIf="attribName.touched && attribName?.errors && attribName?.errors.required || f.submitted && attribName.invalid"
+            class="span_validation">
+            Name is required
+          </span>
+
+
+          <div class="Input">
+            <input type="text" class="mod_input Input-text"
+             [ngClass]="{ 'is-invalid': f.submitted && NOOFDAY.invalid }" required #NOOFDAY="ngModel"
+            placeholder="No Of Days" name="no_of_day" 
+            [(ngModel)]='noOfDay' (keypress)="numberOnly($event)">
+
+
+
+            <label for="input" class="Input-label" >No Of Days</label>
+          </div>
+
+
+
+
+          <span *ngIf="NOOFDAY.touched && NOOFDAY?.errors && NOOFDAY?.errors.required || f.submitted && NOOFDAY.invalid" class="span_validation">
+            Enter No Of Days
+          </span>
+
+
+          <div class="Input">
+            <input type="text" class="mod_input Input-text" 
+            placeholder="No Of Lessons" name="no_of_lesson" 
+            [ngClass]="{ 'is-invalid': f.submitted && NOOFLESSON.invalid }"
+            required #NOOFLESSON="ngModel"
+             [(ngModel)]='noOflesson' (keypress)="numberOnly($event)">
+
+
+
+            <label for="input" class="Input-label" >No Of Lessons</label>
+          </div>
+
+         
+
+          <span *ngIf="NOOFLESSON.touched && NOOFLESSON?.errors && NOOFLESSON?.errors.required || f.submitted && NOOFLESSON.invalid"
+            class="span_validation">
+            Enter No Of Lessons
+          </span>
+
+
+          <div class="Input">
+            <input type="text" class="mod_input Input-text" placeholder="Tax" name="tax" #TAX="ngModel" 
+            style="cursor:pointer"
+            [ngClass]="{ 'is-invalid': f.submitted && TAX.invalid }" 
+              [(ngModel)]='tax' required data-toggle="modal" data-target="#myModal">
+
+
+
+            <label for="input" class="Input-label" >Tax</label>
+          </div>
+
+      
+
+
+          <span *ngIf="TAX.touched && TAX?.errors && TAX?.errors.required || f.submitted && TAX.invalid" class="span_validation">
+            Enter Tax
+          </span>
+
+
+          <div class="Input">
+            <input type="text" class="mod_input Input-text" 
+            placeholder="Price" name="price" #PRICE="ngModel"
+             [ngClass]="{ 'is-invalid': f.submitted && PRICE.invalid }"
+            [(ngModel)]='price' required>
+
+
+
+            <label for="input" class="Input-label" >Price</label>
+          </div>
+
+       
+
+          <span *ngIf="PRICE.touched && PRICE?.errors && PRICE?.errors.required || f.submitted && PRICE.invalid" class="span_validation">
+            Enter Price
+          </span>
+
+          <button class="loggin_pop sign_page_sub">Submit</button>
+
+        </form>
+
+
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-6 col-lg-6 " *ngIf="updatePage">
+      <div>
+        <form action="" method="" class="pop_met" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+
+          <div class="text-right"  style="margin-right:8px">
+            <i class="fa fa-check verifyCheck" *ngIf="labelName == 'Enabled'"></i>
+            <i class="fa fa-times verifyCheck" *ngIf="labelName == 'Disabled'"></i>
+             <label for="disable" class="disableEnablePlaceHolder" [(ngModel)]="labelName" name="labelName" >{{labelName}}</label>
+           
+          </div>
+
+
+
+          <b class="formTitle">{{pageHeader}}</b>
+
+          <div class="Input">
+       
+            <input type="text" class="mod_input Input-text" placeholder="Name" name="name" #attribName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && attribName.invalid }"
+            required [(ngModel)]='name'>
+
+
+
+            <label for="input" class="Input-label" >Name</label>
+          </div>
+
+
+          <span *ngIf="attribName.touched && attribName?.errors && attribName?.errors.required || f.submitted && attribName.invalid"
+            class="span_validation">
+            Name is required
+          </span>
+
+          <div class="Input">
+       
+            <input type="text" class="mod_input Input-text" (keypress)="numberOnly($event)"
+          [ngClass]="{ 'is-invalid': f.submitted && NOOFDAY.invalid }" required #NOOFDAY="ngModel"
+            placeholder="No Of Days" name="no_of_day" [(ngModel)]='noOfDay'>
+
+
+
+            <label for="input" class="Input-label" >No Of Days</label>
+          </div>
+
+        
+
+          <span *ngIf="NOOFDAY.touched && NOOFDAY?.errors && NOOFDAY?.errors.required || f.submitted && NOOFDAY.invalid" class="span_validation">
+            Enter No Of Days
+          </span>
+
+
+          <div class="Input">
+       
+            <input type="text" class="mod_input Input-text" placeholder="No Of Lessons" 
+            (keypress)="numberOnly($event)" name="no_of_lesson" [ngClass]="{ 'is-invalid': f.submitted && NOOFLESSON.invalid }"
+              required #NOOFLESSON="ngModel" [(ngModel)]='noOflesson'>
+
+
+
+            <label for="input" class="Input-label" >No Of Lessons</label>
+          </div>
+
+      
+
+          <span *ngIf="NOOFLESSON.touched && NOOFLESSON?.errors && NOOFLESSON?.errors.required || f.submitted && NOOFLESSON.invalid"
+            class="span_validation">
+            Enter No Of Lessons
+          </span>
+
+
+          <div class="Input">
+       
+            <input type="text" class="mod_input Input-text" placeholder="Tax"
+            name="tax" #TAX="ngModel"  style="cursor:pointer"
+            data-toggle="modal" data-target="#myModal" 
+            [ngClass]="{ 'is-invalid': f.submitted && TAX.invalid }"
+             [(ngModel)]='tax' required>
+
+
+
+            <label for="input" class="Input-label" >tax</label>
+          </div>
+
+      
+
+
+          <span *ngIf="TAX.touched && TAX?.errors && TAX?.errors.required || f.submitted && TAX.invalid" class="span_validation">
+            Enter Tax
+          </span>
+
+          <div class="Input">
+       
+            <input type="text" class="mod_input Input-text" placeholder="Price" (keypress)="numberOnly($event)"
+            name="price" #PRICE="ngModel" [ngClass]="{ 'is-invalid': f.submitted && PRICE.invalid }"
+             [(ngModel)]='price' required>
+
+
+
+            <label for="input" class="Input-label" >Price</label>
+          </div>
+         
+
+          <span *ngIf="PRICE.touched && PRICE?.errors && PRICE?.errors.required || f.submitted && PRICE.invalid" class="span_validation">
+            Enter Price
+          </span>
+
+          <button class="loggin_pop sign_page_sub">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div>
+  <div id="background" *ngIf="noData">
+    <p id="bg-text">No Packages found</p>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Tax List</h4>
+        </div>
+  
+        <div class="modal-body" *ngFor="let item of taxList" data-dismiss="modal" (click)="getTaxId(item._id)">
+          <div class="row tax" style="cursor: pointer;">
+  
+  
+            <div class="col-lg-6">
+              <b>Tax For</b>
+              <div> {{item.taxFor}}</div>
+            </div>
+  
+  
+            <div class="col-lg-6">
+              <b>Tax Percentage</b>
+              <div>{{item.taxPercentage}}</div>
+            </div>
+  
+  
+  
+          </div>
+  
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

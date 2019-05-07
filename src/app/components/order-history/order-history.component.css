@@ -1,0 +1,135 @@
+.row{
+    margin: 0;
+}
+
+
+.tit{
+    margin-left:141px;
+}
+td.table_detail {
+    text-align: right;
+}
+table.table.table-striped.table-bordered.table-list.dataTable.no-footer.list_page td {
+    color: #343434;
+    font-size: 14px;
+}
+
+
+
+.butt_wrapp5 {
+    margin-top: 25px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;}
+   .type12{
+        margin: auto;
+    }
+
+    img.pic12 {
+        width: 43px;
+        height: 40px;
+        margin-bottom: 5px;
+    }
+    .cust-card{
+        box-shadow: 0 0 15px #ddd;
+        box-shadow: 0 0 15px #ddd;
+        margin: auto;
+        border-radius: 7px;
+        padding: 30px 0px;
+        word-break: break-word;
+    }
+    
+    .card-image{
+        margin: 0 auto;
+        padding: 0.5em;
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+    }
+    
+    .card-txt{
+        margin: auto 0;
+    }
+    .cust-card-header{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    margin: top;
+    margin-top: 19px;
+    margin-bottom: -22px;
+    }
+    .btn:not(:disabled):not(.disabled) {
+        cursor: pointer;
+        background-color:orange !important;
+        color: white !important;
+    }
+    
+    .edit-btn-style{
+        border: 1px solid #F9A11B;
+        background: transparent;
+        color: #F9A11B;
+    }
+    .arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid black;
+    }
+    .arrow-up {
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 10px solid black;
+    }
+    .userHeadWrap {
+        display: inline-block;
+    }
+    .custom-select {
+        width: auto;
+        margin-left: 10px;
+        display: inline-block;
+        min-width: 200px;
+    }
+    input.search.custom-select {
+        min-width: 100px;
+        width: 150px;
+        background: white;
+    }
+    .sortWrapper{
+        color: #525252;
+        font-weight: lighter;
+        letter-spacing: 1px;
+    }
+    
+    
+    .pagination_cls {
+        margin-top: 25px;
+        text-align: right;
+    }
+    #background{
+        position:absolute;
+        z-index:0;
+        background:white;
+        display:block;
+        min-height:50%; 
+        min-width:50%;
+        color:yellow;
+    }
+    
+    #content{
+        position:absolute;
+        z-index:1;
+    }
+    
+    #bg-text
+    {
+        color:lightgrey;
+        font-size:88px;
+        transform:rotate(300deg);
+        -webkit-transform: rotate(360deg);
+        margin-left: 279px;
+        cursor: default
+    }

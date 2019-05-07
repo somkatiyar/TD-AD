@@ -1,0 +1,239 @@
+<div class="container">
+
+  <a routerLink="/user-management" class="previous round" title="Previous Page">&#8249;</a>
+
+</div>
+<div class="row" id="mainRow">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <br>
+    <br>
+
+    <form #f="ngForm" novalidate (ngSubmit)="f.form.valid && register()">
+
+
+      <div class="row">
+
+        <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="isUpdatePage">
+
+          <!-- picUrl+details.profilePictureUrl -->
+
+          <img [src]="isProfile ? selectedImage : picUrl + profilePictureUrl ?  picUrl+details.profilePictureUrl : 'assets/images/userPlaceholder.png'"
+            (error)="errorHandler($event)" class="photo_upload" alt="">
+
+          <div class="edit-profile-section">
+            <img src="assets/images/camera.png" class="camera" (click)="profile.click();" (error)="imageUrl">
+          </div>
+          <input type="file" accept="image/x-png,image/gif,image/jpeg" class="file" name="image" #profile (change)="addProfilePicture($event,'PROFILE_PICTURE')" />
+
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 text-right">
+          <br>
+          <label class="animaterContainer" *ngIf="!isAddPage">
+            <button type="button" [class]="btnClass" (click)="disableItem('disable')">{{disableBtn}}</button><br>
+
+          </label>
+
+        </div>
+      </div>
+
+
+
+
+
+
+      <div class="row">
+
+
+
+        <div class="col-md-6 " style="margin-top: 19px;">
+          <!-- <h4 class="schl">User Information</h4> -->
+          <div class="input_conatiner">
+
+
+
+            <div class="Input">
+              <select class="custom-select d-block w-100 Input-text" #COUNTRY="ngModel" style="margin-bottom: 21px"
+                (change)="findCountryCode()" [(ngModel)]="country" name="country" [ngClass]="{ 'is-invalid': f.submitted && COUNTRY.invalid }"
+                required>
+                <option hidden value="" disabled selected>* Select Country </option>
+                <option *ngFor="let co of countryList" [value]="co.value">{{co.name}}</option>
+              </select>
+
+              <label for="input" class="Input-label" *ngIf="country">* Select Country </label>
+
+            </div>
+
+
+
+
+
+
+            <span *ngIf="COUNTRY.touched && COUNTRY?.errors && COUNTRY?.errors.required || f.submitted && COUNTRY.invalid"
+              class="span_validation school">
+              Country is required
+            </span>
+
+
+            <div class="Input">
+              <input type="text" class="Input-text" autocomplete="new" #FNAME="ngModel" (keypress)="omit_special_char($event)"
+                (keypress)=" charOnly($event)" style="margin:20px 0px" placeholder="* FirstName" required name="firstName"
+                [ngClass]="{ 'is-invalid': f.submitted && FNAME.invalid }" [(ngModel)]="details.firstName">
+
+              <label for="input" class="Input-label">* FirstName</label>
+
+            </div>
+
+
+
+
+
+
+            <span *ngIf="FNAME.touched && FNAME.errors?.required ||f.submitted && FNAME.invalid" class="span_validation school">
+              First name is required
+
+            </span>
+
+
+            <div class="Input">
+              <input type="text" class="Input-text" #LNAME="ngModel" placeholder="* LastName" required name="lastName"
+                style="margin:20px 0px" (keypress)="omit_special_char($event)" (keypress)=" charOnly($event)" [ngClass]="{ 'is-invalid': f.submitted && LNAME.invalid }"
+                [(ngModel)]="details.lastName">
+
+              <label for="input" class="Input-label">* LastName</label>
+
+            </div>
+
+
+
+            <span *ngIf="LNAME.touched && LNAME.errors?.required ||f.submitted && LNAME.invalid" class="span_validation school">
+              Last name is required
+            </span>
+
+
+
+            <div class="Input">
+              <input type="email" class="Input-text" #EMAIL="ngModel" placeholder="* Email" name="email" [(ngModel)]='details.email'
+                [ngClass]="{ 'is-invalid': f.submitted && EMAIL.invalid }" style="margin:20px 0px" pattern='^\w+[\w-\.]*\@\w+((-\w+)|(\w*))(\.[a-z]{2,7}){1,2}$'
+                required>
+
+              <label for="input" class="Input-label">* Email</label>
+
+            </div>
+
+
+
+
+            <span *ngIf="EMAIL.touched && EMAIL.errors?.required ||f.submitted && EMAIL.invalid" class="span_validation school">
+              Email is required
+            </span>
+
+            <span *ngIf="EMAIL.touched && EMAIL.errors?.pattern" class="span_validation">
+              Enter valid email
+            </span>
+
+
+
+
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+
+          <div class="input-group mb-3">
+
+            <input id="from" name="from" style="padding-left: 20px;  " bsDatepicker #dp="bsDatepicker" [ngClass]="{ 'is-invalid': f.submitted && DOB.invalid }"
+              #DOB="ngModel" class="form-control date-picker-style Input-text" placeholder="* Date Of Birth" name="details.dob "
+              required bsDatepicker [(bsValue)]="dob" value="{{ details.dob | date:'dd-MM-yyyy' }}" [(ngModel)]="dob">
+
+
+            <label for="input" class="Input-label" style="top: 12px;">* Date Of Birth</label>
+
+
+
+
+            <div class="input-group-append" id="button-addon3">
+              <button (click)="dp.toggle()" class="btn btn-outline-secondary date-btn-style" type="button">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          <span *ngIf="DOB.touched && DOB?.errors && DOB?.errors.required ||f.submitted && DOB.invalid" class="span_validation school">
+            Date Of Birth is required
+          </span>
+
+
+          <!-- <input type="text" class="mod_input" #MOBILENO="ngModel" 
+          placeholder="* Phone Number" name="mobileNumber" 
+          [ngClass]="{ 'is-invalid': f.submitted && MOBILE.invalid }"
+            [(ngModel)]='details.mobileNumber' required 
+            (keypress)="numberOnly($event)" maxlength="13" minlength="9">
+
+            <span *ngIf="MOBILENO.touched && MOBILENO?.errors && MOBILENO?.errors.required || f.submitted && MOBILENO.invalid" class="span_validation">
+              Mobile Number is required!
+            </span>
+            <span *ngIf="MOBILENO?.errors && MOBILENO?.errors.maxlength" class="span_validation">
+              Mobile Number can't more then 13 digit
+            </span>
+            <span *ngIf=" MOBILENO?.errors && MOBILENO?.errors.minlength" class="span_validation">
+              Mobile Number can't less then 9 and more then 13 digit
+            </span> -->
+
+          <div class="Input">
+
+            <input type="text" class="Input-text" placeholder="Phone Number" name="mobileNumber" #MOBILENO="ngModel"
+              style="margin:20px 0px" [(ngModel)]="details.mobileNumber" [ngClass]="{ 'is-invalid': f.submitted && MOBILENO.invalid }"
+              (keypress)="numberOnly($event)" maxlength="13" minlength="9" required>
+
+            <label for="input" class="Input-label">* Phone Number</label>
+
+          </div>
+
+
+
+          <div class="message-space">
+
+            <span *ngIf="MOBILENO.touched && MOBILENO?.errors && MOBILENO?.errors.required || f.submitted && MOBILENO.invalid"
+              class="span_validation school">
+              Mobile Number is required!
+            </span>
+            <span *ngIf="MOBILENO?.errors && MOBILENO?.errors.maxlength" class="span_validation school">
+              Mobile Number can't more then 13 digit
+            </span>
+            <span *ngIf=" MOBILENO?.errors && MOBILENO?.errors.minlength" class="span_validation school">
+              Mobile Number can't less then 9 and more then 13 digit
+            </span>
+          </div>
+
+
+
+          <div class="Input">
+
+            <input type="text" class="Input-text" #DL="ngModel" placeholder="* Driving Licence" name="drivingLicence"
+              style="margin:20px 0px" [ngClass]="{ 'is-invalid': f.submitted && DL.invalid }" [(ngModel)]='details.drivingLicense'
+              required>
+
+            <label for="input" class="Input-label">* Driving Licence</label>
+
+          </div>
+
+
+          <span *ngIf="DL.touched && DL.errors?.required ||f.submitted && DL.invalid" class="span_validation school">
+            Driving License is required
+          </span>
+
+
+        </div>
+
+      </div>
+      <!-- <input type="submit" name="" [disabled]="myForm.invalid" value="Submit" class="loggin_pop sign_page_sub"> -->
+      <button type="submit" name="" value="Submit" class="loggin_pop sign_page_sub">{{btnTitle}}</button>
+    </form>
+
+  </div>
+
+</div>
